@@ -15,8 +15,30 @@ The outline of the bisulphite treatment of a sample DNA sequence is shown in \em
 	\end{center}
 \end{figure} 
 
-In WGBS experiments, the DNA molecules often originate from distinct cells, as a consequence, the methylation state of a particular cytosine may be different across DNA molecules. Hence, in the context of WGBS experiments the methylation of a particular cytosine is described as \emph{methylation level}, which is the fraction of the molecules in the sample containing 5-Methylcytosine at the specific genomic locus \citep{Schultz2012}.
+In WGBS experiments, the DNA molecules often originate from distinct cells, as a consequence, the methylation state of a particular cytosine may be different across DNA molecules. Hence, in the context of WGBS experiments the methylation of a particular cytosine is described as \emph{methylation level}, which is the fraction of the molecules in the sample containing 5-Methylcytosine at the specific genomic locus \citep{Schultz2012}. \emph{Read coverage} is the average number of times a CpG site is read during the sequencing process, and this depends on the depth of the sequencing.
 
 \cite{Meissner2005} developed a technique, termed Reduced Representation Bisulfite Sequencing (RRBS), for analyzing the genome-wide methylation profiles efficiently, at lower cost and with greater coverage of CpG dense regions. This method, combines bisulphite treatment and restriction enzymes, such as MspI, to generate a 'reduced representation' of the genome of a strain, tissue or cell type which have a high CpG content \citep{Meissner2005}. 
 
-What is often of practical interest is identifying the methylation profile of a genomic region, \eg the methylation profile of a promoter, so by independently looking at individual cytosines will not take us far in analyzing the data and uncovering important biological processes. This means that the higher-order changes in the methylation profiles, such as their shape, should be considered. Taking into consideration that the methylation level of a CpG site is highly correlated with the methylation level of the surrounding CpGs (\ie spatial co-dependence), \cite{Mayo2014} developed M$^3$D, which is non-parametric kernel-based method for statistical identification of differentially methylated regions (DMRs). This project makes the same assumption about the \emph{spatial co-dependence} of CpGs, but is mainly concentrated in clustering together similar methylation profiles.
+What is often of practical interest is identifying the methylation profile of a genomic region, \eg the methylation profile of a promoter. \cite{Vanderkraats2013} suggested that the shape of the methylation profile plays an important role in predicting gene expression, leading to a potentially functional role for methylation patterns. This means that higher-order properties, such as shape, of the methylation profiles over a region should be considered. Taking into consideration that the methylation level of a CpG site is highly correlated with the methylation level of the surrounding CpGs (\ie spatial co-dependence), \cite{Mayo2014} developed M$^3$D, which is non-parametric kernel-based method for statistical identification of differentially methylated regions (DMRs). This project makes the same assumption about the \emph{spatial co-dependence} of CpGs, but is mainly concentrated in clustering together similar methylation profiles.
+
+\section{Modelling DNA methylation profiles}
+DNA methylation data generated from next generation sequencing methods can be modelled with a Binomial distribution. Assume that \emph{t} is the total number of reads that are mapped to a specific CpG site, and that the 5-Methylcytosine were found in \emph{m} of these reads. Then for each CpG cite we have the read proportion \emph{(m,n)}, and we assume that:
+
+\begin{equation}
+	m \sim Binom(n, p)
+\end{equation}
+
+where \emph{p} is the unknown methylation level of the CpG site.
+
+We are interested in modelling methylation profiles across different genomic regions, \eg promoter regions, hence the data can be represented as a set of vectors, whose dimensionality \emph{L} depends on the number of the individual CpG sites for that specific region. Thus, each region \emph{i} can be represented by a vector $\mathbf{n}_{i}$ of length \emph{L}, and each entry of the vector consists of the tuple:
+
+\begin{equation}
+	%n_{i}^{l} = \frac{m_{i}^{l}}{t_{i}^{l}}
+	n_{i}^{l} = (m_{i}^{l},t_{i}^{l})
+\end{equation}
+
+where, $m_{i}^{l}$ is the number of 5-Methylcytosine reads on $l$-th CpG site in region $i$, and $t_{i}^{l}$ is the total number of reads on $l$-th CpG site in region $i$.
+
+A promising approach for modelling the methylation profile for a given region is to use a \emph{Gaussian Process} \citep{Rasmussen2006}. Even though this approach would be ideal, its time complexity of $O(n^{3})$, is prohibitive for our problem. Thus, we have to resort in modelling the methylation level using $n^{th}$ degree polynomial functions.
+
+More specifically, let $\mathbf{x}$ be the genomic region of interest, and let $f(\mathbf{x})$ be the methylation profile at that specific genomic region, \eg $f(\mathbf{x}) = \alpha \mathbf{x}^{2} + \beta \mathbf{x} + c$.

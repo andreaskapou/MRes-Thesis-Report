@@ -136,8 +136,9 @@ where, $\gamma(z_{ik}) \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1})$ is the resp
 \textbf{E-step}: The E-step can be computed using the following form for any mixture model:
 \begin{equation} \label{responsibilities-f}
   \begin{split}
-	\gamma(z_{ik}) \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1}) & = \frac{p(z_{i}=k)p(x_{i}|\theta_{k}^{t-1},z_{i}=k)}{\sum_{j=1}^{K} p(z_{i}=j)p(x_{i}|\theta_{j}^{t-1},z_{i}=j)} \\
-					   & = \frac{\pi_{k}p(x_{i}|\theta_{k}^{t-1},z_{i}=k)}{\sum_{j=1}^{K} \pi_{j}p(x_{i}|\theta_{j}^{t-1},z_{i}=j)}
+	\gamma(z_{ik}) & \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1}) \\
+				   & = \frac{p(z_{i}=k)p(x_{i}|z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} p(z_{i}=j)p(x_{i}|z_{i}=j,\theta_{j}^{t-1})} \\
+				   & = \frac{\pi_{k}p(x_{i}|z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} \pi_{j}p(x_{i}|z_{i}=j,\theta_{j}^{t-1})}
   \end{split}
 \end{equation}
 
@@ -149,17 +150,73 @@ For the mixing proportions $\pi_{k}$, we take the derivative of \emph{Eq. \ref{l
 		\pi_{k} = \frac{1}{N} \sum_{i} \gamma(z_{ik})
 \end{equation}
 
-To derive the M-step for the parameters $\theta_{k}$, we only keep the terms of \emph{Eq. \ref{log-lik-expected-f}} that depend on $\theta_{k}$ and we optimize them wrt $\theta_{k}$, that is:
+To derive the M-step for the parameters $\theta_{k}$, we only keep the terms of \emph{Eq. \ref{log-lik-expected-f}} that depend on $\theta_{k}$, that is:
 \begin{equation} \label{parameters-est-EM-f}
 		\ell(\theta_{k}) \triangleq \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(x_{i}|\theta_{k})
 \end{equation}
 
-The maximization of \emph{Eq. \ref{parameters-est-EM-f}} yields different results depending on the probability distribution $p(x_{i}|\theta_{k})$. For most of the well known probability distributions, including the Normal, Binomial, Poisson, etc., an analytical solution for the maximization of $\ell(\theta_{k})$ exists. 
+and we optimize them with respect to $\theta_{k}$.
 
-For more complex probability distributions, the maximization of $\ell(\theta_{k})$ may be intractable, thus numerical optimization strategies \citep{Nocedal2006}, such as conjugate gradients algorithm \citep{Hestenes1952} should be exploited. This extension of EM algorithm is known as \emph{Generalised EM}, or GEM, and it has been proved that on each EM iteration of the GEM algorithm the log likelihood increases and thus converges to the maximum likelihood estimator \citep{Wu1983}.
+The maximization of \emph{Eq. \ref{parameters-est-EM-f}} yields different results depending on the likelihood function $p(x_{i}|\theta_{k})$. For most of the well known probability distributions, including the Normal, Binomial, Poisson, etc., the maximization of $\ell(\theta_{k})$ is feasible. 
+
+For more complex likelihood functions, the maximization of $\ell(\theta_{k})$ may be intractable, thus numerical optimization strategies \citep{Nocedal2006}, such as conjugate gradients algorithm \citep{Hestenes1952} should be exploited. This extension of EM algorithm is known as \emph{Generalised EM}, or GEM, and it has been proved that on each EM iteration of the GEM algorithm the log likelihood increases, and thus converges to the maximum likelihood estimator \citep{Wu1983}.
 
 \subsection{EM for clustering methylation profiles}
 In this section, we will derive the \emph{E} and \emph{M} steps for clustering methylation profiles using the model described in \emph{Section \ref{model-meth-profiles-s}}.
 
-But before, we have to explicitly introduce the parameters $\theta_{k}$ of the model, excluding the mixing proportions $\pi_{k}$ which are present for any mixture model. For example, in a Gaussian Mixture Model (GMM) the model parameters $\theta_{k}$, are the mean $\mu_{k}$ and the variance $\sigma_{k}^{2}$ of the Gaussian components. In our model, the Binomial distributed Probit regression function given in \emph{Eq. \ref{likel-binom-prob-log-f}}, the parameters are the coefficients of the $n^{th}$ degree polynomial function $\mathbf{g}_{i}$. Thus, during the EM algorithm we infer these sets of parameters for each cluster $k$.
+But before we have to explicitly introduce the parameters $\theta_{k}$ of the model, excluding the mixing proportions $\pi_{k}$ which are present for any mixture model. For example, in a Gaussian Mixture Model (GMM) the model parameters $\theta_{k}$, are the mean $\mu_{k}$ and the variance $\sigma_{k}^{2}$ of the Gaussian components. In our model, the Binomial distributed Probit regression function given in \emph{Eq. \ref{likel-binom-prob-f}}, the parameters are the coefficients of the $n^{th}$ degree polynomial function $\mathbf{g}_{i}$. Thus, during the EM algorithm we infer these sets of parameters for each cluster $k$. For example, for a $2^{nd}$ degree polynomial, we can rewrite \emph{Eq. \ref{likel-binom-prob-f}} by explicitly showing the model parameters as follows:
+\begin{equation} \label{likel-binom-prob-example1-f}
+  \begin{split}
+	p(\mathbf{y}_{i}|\mathbf{f}_{i}, \theta) & = \prod_{l=1}^{L} p(y_{il}|f_{il}, \theta) \\
+							 & = \prod_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta)\big) \\
+							 & = \prod_{l=1}^{L} \binom{t_{il}}{m_{il}} \Phi(\alpha x_{il}^{2} + \beta x_{il} + c)^{m_{il}} (1 - \Phi(\alpha x_{il}^{2} + \beta x_{il} + c)\big)^{t_{il} - m_{il}}
+  \end{split}
+\end{equation}
 
+where $\theta = (\alpha, \beta, c)$.
+
+\subsubsection{E-Step}
+In the E-step we compute the responsibility that component k takes on explaining observations $\mathbf{y_{i}}$, and by substituting the proposed likelihood function to \emph{Eq. \ref{responsibilities-f}}, we have:
+\begin{equation} \label{responsibilities-model-f}
+  \begin{split}
+	\gamma(z_{ik}) & \triangleq p(z_{i}=k|\mathbf{y_{i}},\theta_{k}^{t-1}) \\
+				   & = \frac{\pi_{k}p(\mathbf{y}_{i}|\mathbf{f}_{i},z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} \pi_{j}p(\mathbf{y}_{i}|\mathbf{f}_{i},z_{i}=j,\theta_{j}^{t-1})} \\
+				   & = \frac{\pi_{k} \prod\limits_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta_{k}^{t-1})\big)} {\sum\limits_{j=1}^{K} \pi_{j} \prod\limits_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta_{j}^{t-1})\big)}
+  \end{split}
+\end{equation}
+
+\subsubsection{M-Step}
+In the M-step, we optimize \emph{Eq. \ref{log-lik-expected-f}} with respect to $\pi_{k}$ and $\theta_{k}$. The update for the mixing proportions $\pi_{k}$ on each M-step, is the same as shown in \emph{Eq. \ref{mixing-proportions-est-f}}, that is:
+\begin{equation} \label{mixing-proportions-est2-f}
+		\pi_{k} = \frac{1}{N} \sum_{i} \gamma(z_{ik})
+\end{equation}
+
+To update the parameters $\theta_{k}$, we need to optimize $\ell(\theta_{k})$. Substituting our model to \emph{Eq. \ref{parameters-est-EM-f}}, the quantity that needs to be maximized is:
+\begin{equation} \label{parameters-est2-EM-f}
+  \begin{split}
+	\ell(\theta_{k}) & \triangleq \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(\mathbf{y}_{i}|\mathbf{f}_{i}, \theta_{k}) \\
+					 & = \sum_{i} \sum_{k} \gamma(z_{ik}) \log \bigg( \prod_{l} Binom \big(t_{il}, \Phi(g_{il}; \theta_{k})\big) \bigg)\\
+					 & = \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \log \bigg(Binom \big(t_{il}, \Phi(g_{il}; \theta_{k})\big) \bigg)
+  \end{split}
+\end{equation}
+
+Direct maximization of this quantity w.r.t the parameters $\theta_{k}$ is not feasible, thus Conjugate Gradients method \citep{Hestenes1952} will be used, which is a first order numerical optimization algorithm for solving particular systems of linear equations. Thus, it requires to compute the \emph{gradient}:
+
+\begin{equation} \label{gradient-f}
+	\nabla\ell = \bigg( \frac{\partial \ell(\theta_{k})}{\partial \alpha}, \frac{\partial \ell(\theta_{k})}{\partial \beta}, \frac{\partial \ell(\theta_{k})}{\partial c}\bigg) 
+\end{equation}
+
+where the partial derivatives are given in the equations below (see Appendix ... for the whole derivations):
+\begin{equation} \label{derivative-a-f}
+	\frac{\partial \ell(\theta_{k})}{\partial \alpha} =  \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il}^{2} \mathbf{\phi}(g_{il};\theta_{k})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il};\theta_{k})}{\Phi(g_{il};\theta_{k})\big(1-\Phi(g_{il};\theta_{k})\big)} \bigg) \bigg]
+\end{equation}
+
+\begin{equation} \label{derivative-b-f}
+	\frac{\partial \ell(\theta_{k})}{\partial \beta} =  \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il} \mathbf{\phi}(g_{il};\theta_{k})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il};\theta_{k})}{\Phi(g_{il};\theta_{k})\big(1-\Phi(g_{il};\theta_{k})\big)} \bigg) \bigg]
+\end{equation}
+
+\begin{equation} \label{derivative-c-f}
+	\frac{\partial \ell(\theta_{k})}{\partial c} =  \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ \mathbf{\phi}(g_{il};\theta_{k})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il};\theta_{k})}{\Phi(g_{il};\theta_{k})\big(1-\Phi(g_{il};\theta_{k})\big)} \bigg) \bigg]
+\end{equation}
+
+where $\mathbf{\phi}$ is the \emph{probability density function (pdf)} for the standard normal distribution $\mathcal{N}(0,1)$.

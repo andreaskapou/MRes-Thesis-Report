@@ -1,0 +1,43 @@
+% model_pca.tex
+%
+% Copyright (C) 2012 Jaakko Luttinen
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU General Public License.
+%
+% See the files LICENSE_LPPL and LICENSE_GPL for more details.
+
+% PCA model
+
+%\beginpgfgraphicnamed{model-pca}
+\begin{tikzpicture}
+
+  % Define nodes
+  \node[obs]                              (X) {$X_{mn}$};
+  \node[latent, above=of X] 		(L) {$L_{mn}$};
+  \node[latent, above=of L] 		(a) {$a$};
+  \node[latent, right=1.4cm of L]  (C) {$C_{n}$};
+  \node[latent, above=of C] 		(p) {$\pi$};
+  \node[latent, right=1cm of C]  (t) {$\theta_{mk}$};
+  \node[latent, above=of t] 		(G) {$G_{0}$};
+
+  % Connect the nodes
+  \edge {L,t} {X} ; %
+  \edge {a,C} {L} ; %
+  \edge {p} {C} ; %
+  \edge {G} {t} ; %
+
+  % Plates
+  \plate {} {(t)} {$K$};
+  \plate {yx} {(L)(X)} {$M$};
+  \plate {} {(C)(X)(yx.north west)(yx.south west)} {$N$};
+
+\end{tikzpicture}
+%\endpgfgraphicnamed
+
+%%% Local Variables: 
+%%% mode: tex-pdf
+%%% TeX-master: "example"
+%%% End: 

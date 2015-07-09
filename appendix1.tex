@@ -1,0 +1,78 @@
+\chapter{Appendix 1} \label{appendix1-ch}
+
+\section{Partial Derivatives for M-Step}
+
+We need to compute the partial derivatives w.r.t. parameters $\theta_{k}$ of the following quantity:
+\begin{equation} \label{parameters-est2-EM-f-app}
+  \begin{split}
+	\ell(\theta_{k}) & \triangleq \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(\mathbf{y}_{i}|\mathbf{f}_{i}, \theta_{k}) \\
+					 & = \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \log \bigg(Binom \big(t_{il}, \Phi(g_{il}; \theta_{k})\big) \bigg) \\
+					 & =  \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \bigg(\log \binom{t_{il}}{m_{il}} + m_{il} \log \Phi(g_{il}; \theta_{k}) + \big(t_{il} - m_{il} \big) \log \big(1 - \Phi(g_{il}; \theta_{k})\big)\bigg)
+  \end{split}
+\end{equation}
+where $\theta_{k} = (\alpha, \beta, c)$ in the example of $2^{nd}$ degree polynomial, i.e. $g_{il} = \alpha x^{2} + \beta x + c$. To not clutter notation, let $\Phi(g_{il}) = \Phi(g_{il}; \theta_{k})$. Thus, for the partial derivatives w.r.t. $\alpha$ parameter we have the following derivation:
+
+\begin{equation} \label{derivative-a-f-app}
+  \begin{split}
+	\frac{\partial \ell(\theta_{k})}{\partial \alpha} & = \sum_{i} \gamma(z_{ik}) \sum_{l} \bigg[ m \frac{\partial}{\partial \alpha}\big(\log \Phi(g_{il})\big) + (t-m) \frac{\partial}{\partial \alpha}\big(\log \big[1 - \Phi(g_{il})\big]\big)\bigg] \\
+		& = \sum_{i} \gamma(z_{ik}) \sum_{l} \bigg[ \frac{m}{\Phi(g_{il})} \frac{\partial \Phi(g_{il})}{\partial g_{il}} \frac{\partial g_{il}}{\partial \alpha} + \frac{t - m}{1 - \Phi(g_{il})}\bigg( -\frac{\partial \Phi(g_{il})}{\partial g_{il}} \frac{\partial g_{il}}{\partial \alpha} \bigg) \bigg] \\
+		& = \sum_{i} \gamma(z_{ik}) \sum_{l} \bigg[ \frac{m}{\Phi(g_{il})} x_{il}^{2} \mathbf{\phi}(g_{il}) - \frac{t - m}{1 - \Phi(g_{il})} x_{il}^{2} \mathbf{\phi}(g_{il}) \bigg]\\
+		& = \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il}^{2} \mathbf{\phi}(g_{il})\bigg(\frac{m}{\Phi(g_{il})} - \frac{t - m}{1 - \Phi(g_{il})}\bigg) \bigg] \\
+		& = \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il}^{2} \mathbf{\phi}(g_{il})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il})}{\Phi(g_{il})\big(1-\Phi(g_{il})\big)} \bigg) \bigg]
+	\end{split}
+\end{equation}
+where $\mathbf{\phi}(g_{il}) \triangleq \mathbf{\phi}(g_{il};\theta_{k})$ is the \emph{probability density function (pdf)} for the standard normal distribution $\mathcal{N}(0,1)$.
+
+In a similar fashion we can derive the partial derivatives $\frac{\partial \ell(\theta_{k})}{\partial \beta}$ and $\frac{\partial \ell(\theta_{k})}{\partial c}$.
+
+
+
+
+\section{Posterior distribution for Poisson Log-Linear Mixture Model}
+
+The likelihood for the Poisson log-linear mixture model is given by:
+\begin{equation} \label{poisson-log-lin-mm-app}
+  \begin{split}
+	\ell(\mathbf{\lambda}) & \triangleq p(\mathbf{x} | \mathbf{\lambda}) = \sum\limits_{z} p(\mathbf{z}) p(\mathbf{x} | \mathbf{\lambda}, \mathbf{z})\\
+		& = \prod_{i} \sum_{k} p(z_{i} = k) \prod_{j} \prod_{l} \mathcal{P}(x_{ijl} | \mu_{ijlk}) \\
+		& = \prod_{i} \sum_{k} \pi_{k} \prod_{j} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})
+  \end{split}
+\end{equation}
+where $\mathcal{P}(\cdot)$ denotes the Poisson probability mass function, $w_{i}$ and $s_{jl}$ are considered to be fixed constants learned from the data, and $\mathbf{z}$ are discrete \emph{latent variables} representing from which cluster each object was generated. 
+
+For a specific condition $j$ in cluster $k$, the likelihood function simplifies to:
+\begin{equation} \label{poisson-log-lin-mm-jk-app}
+  \begin{split}
+	\ell(\lambda_{jk}) & \triangleq \prod_{i} \bigg( \pi_{k} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})\bigg)^{\mathbb{I}(z_{i}=k)}
+  \end{split}
+\end{equation}
+
+In the Bayesian framework we need to define prior distributions on the parameters and if possible \emph{conjugate priors}. For the parameter of the Poisson probability mass function a natural choice is to use a Gamma prior:
+\begin{equation} \label{poisson-prior-mm-app}
+  \begin{split}
+  \lambda_{jk} & \sim \mathcal{G}(\alpha, \beta) \\
+  	& = \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)}
+    \end{split}
+\end{equation}
+where $\mathcal{G}(\alpha, \beta)$ denotes the Gamma probability distribution with \emph{shape} parameter $\alpha$ and \emph{rate} parameter $\beta$, and $\Gamma(\alpha)$ is the \emph{Gamma} function evaluated at $\alpha$.
+
+Using the Bayes Rule, we can compute the posterior distribution for the parameter $\lambda_{jk}$ as follows:
+
+\begin{equation} \label{posterior-poisson-bayes-rule-app}
+  \begin{split}
+  	p(\lambda_{jk} | \mathbf{x}) & = \frac{p(\mathbf{x}| \lambda_{jk}) \times p(\lambda_{jk})}{p(\mathbf{x})} \\
+  		& \propto p(\mathbf{x}| \lambda_{jk}) \times p(\lambda_{jk}) \\
+  		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})\bigg)^{\mathbb{I}(z_{i}=k)} \times \mathcal{G}(\lambda_{jk}|\alpha, \beta) \\
+  		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \frac{1}{x_{ijl}!} e^{-(w_{i}s_{jl}\lambda_{jk})} (w_{i}s_{jl}\lambda_{jk})^{x_{ijl}}\bigg)^{\mathbb{I}(z_{i}=k)} \times \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
+		& \propto \prod_{i} \bigg(\prod_{l} e^{-(w_{i}s_{jl}\lambda_{jk})} \lambda_{jk}^{x_{ijl}} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)}\bigg)^{\mathbb{I}(z_{i}=k)} \\
+		& = \prod_{i} \bigg(\prod_{l} \lambda_{jk}^{(x_{ijl} + a -1)} e^{-\lambda_{jk}(w_{i}s_{jl} + \beta)}\bigg)^{\mathbb{I}(z_{i}=k)} \\
+		& = \lambda_{jk}^{\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl} + a -1\big)} e^{-\lambda_{jk}\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl} + \beta \big)}
+  \end{split}
+\end{equation}
+
+This quantity is an unnormalized Gamma distribution, so the posterior is in the same family distribution as the prior and can be written as follows:
+\begin{equation} \label{posterior-poisson-bayes-rule-app}
+  	p(\lambda_{jk} | \mathbf{x}) = \mathcal{G}\bigg(a + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl}, b + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl} \bigg)
+\end{equation}
+ 
+

@@ -63,6 +63,12 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{relsize}
+\usepackage{multirow}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{bayesnet}
 \usepackage[colon,authoryear]{natbib}
 \usepackage[pdftex,
             pagebackref=false,
@@ -126,18 +132,18 @@ Acknowledgements go here ...
 %% format.
 
 \include{introduction}
-%%\include{background}
-%%\include{experimental-back}
-%%\include{methods}
-%%\include{two-phase}
-%%\include{discussion}
-%%\include{conclusion}
+\include{background}
+\include{dna-methylation}
+%\include{rna-seq}
+%\include{bcc}
+%\include{discussion}
+
 
 %%%%%%%%
 %% Any appendices should go here. The appendix files should look just like the
 %% chapter files.
-%%\appendix
-%%\include{appendix1}
+\appendix
+\include{appendix1}
 
 %% Choose your favourite bibliography style here.
 \bibliographystyle{apalike}

@@ -1,4 +1,4 @@
-\subsection{The EM algorithm} \label{em-algorithm-sub-l}
+\subsection{The EM algorithm} \label{em-algorithm-l-subsect}
 EM is a general iterative algorithm for computing MLEs when there are missing data or latent variables. As aforementioned, mixture models can be formulated as LVMs, thus, EM arises naturally and alternates between inferring the latent values given the parameters (\emph{E-step}), and then optimizing the parameters given the filled in data (\emph{M-step}). EM exploits the fact that if the data were fully observed then the MLE would be easy to compute. In their classic paper \cite{Dempster1977} proved that EM monotonically increases the log likelihood and it converges to a maximum likelihood estimator. The algorithm ends when a convergence criterion is satisfied, \eg the log likelihood does not increase above a certain threshold between two consecutive iterations. 
 
 \emph{Fig. \ref{em-algorithm-pic}} illustrates the EM algorithm for the mixture of two Gaussian distributions applied to the Old Faithful dataset.
@@ -36,27 +36,27 @@ EM is a general iterative algorithm for computing MLEs when there are missing da
 Our presentation for the derivation of the EM algorithm is based on \cite[Ch. \ 11]{Murphy2012}.
 
 Let $x_{i}$ be the observed variables, and $z_{i}$ be the hidden or latent variables. We are interested in maximizing the log likelihood of the observed data:
-\begin{equation} \label{log-lik-observed-f}
+\begin{equation} \label{log-lik-observed-f-mm}
 	\ell(\Theta) \triangleq \sum_{i=1}^{N} \log p(x_{i}|\theta) =  \sum_{i=1}^{N} \log \bigg[\sum_{z_{i}} p(x_{i}, z_{i}|\theta) \bigg]
 \end{equation}
 which is hard to optimize due to the presence of the summation inside the logarithm, so the logarithm no longer acts directly on the likelihood function.
 
 Let us define the \emph{complete data log likelihood} as follows:
-\begin{equation} \label{log-lik-comp-observed-f}
+\begin{equation} \label{log-lik-comp-observed-f-mm}
 	\ell_{c}(\Theta) \triangleq \sum_{i=1}^{N} \log p(x_{i}, z_{i}|\theta)
 \end{equation}
 
 If the variables $z_{i}$ were observed, we assume that this likelihood could be easily computed. EM gets around this problem by defining the \emph{expected complete data log likelihood} as:
-\begin{equation} \label{log-lik-expected-f}
+\begin{equation} \label{log-lik-expected-f-mm}
 		Q(\Theta, \Theta^{t-1}) \triangleq \mathbb{E} \big[\ell_{c}(\Theta) | \mathbf{X}, \Theta^{t-1}\big]
 \end{equation}
 where $t$ is the current iteration. The expectation is taken with respect to the old parameters $\Theta^{t-1}$ and the observed data $\mathbf{X}$. In the \emph{E-step}, we compute the terms inside $Q(\Theta, \Theta^{t-1})$ for which MLE depends on. In the \emph{M-step}, we optimize Q w.r.t $\Theta$:
-\begin{equation} \label{log-lik-observed-f}
+\begin{equation} \label{max-log-lik-observed-f-mm}
 	\Theta^{t} = \underset{\Theta}{\operatorname{argmax}} \; Q(\Theta, \Theta^{t-1})
 \end{equation}
 
 For the specific case of mixture models, the expected complete data log likelihood is:
-\begin{equation} \label{log-lik-expected-derivation-f}
+\begin{equation} \label{log-lik-expected-derivation-f-mm}
 	\begin{aligned}
 		Q(\Theta, \Theta^{t-1}) & \triangleq \mathbb{E} \big[\ell_{c}(\Theta) | \mathbf{X}, \Theta^{t-1}\big] \\
 								& = \mathbb{E} \bigg[ \sum_{i} \log p(x_{i}, z_{i}|\theta) \bigg] \\
@@ -72,7 +72,7 @@ where, $\gamma(z_{ik}) \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1})$ is the resp
 
 \subsubsection{E-Step}
 The E-step can be computed using the following form for any mixture model, which is the responsibility that component k takes for explaining the observation $x_{i}$:
-\begin{equation} \label{responsibilities-f}
+\begin{equation} \label{responsibilities-f-mm}
   \begin{aligned}
 	\gamma(z_{ik}) & \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1}) \\
 				   & = \frac{p(z_{i}=k)p(x_{i}|z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} p(z_{i}=j)p(x_{i}|z_{i}=j,\theta_{j}^{t-1})} \\
@@ -84,7 +84,7 @@ The E-step can be computed using the following form for any mixture model, which
 \subsubsection{M-Step}
 In the M-step we optimize $Q$ with respect to parameters $\Theta = (\theta_{1},...,\theta_{K},\pi_{1},...,\pi_{K})$.
 
-For the mixing proportions $\pi_{k}$, we take the derivative of \emph{Eq. \ref{log-lik-expected-derivation-f}} w.r.t. $\pi_{k}$ and set it to zero; due to the constraint that $\sum_{k=1}^{K}\pi_{k} = 1$ we introduce a Lagrange multiplier. Thus we have:
+For the mixing proportions $\pi_{k}$, we take the derivative of \emph{Eq. \ref{log-lik-expected-derivation-f-mm}} w.r.t. $\pi_{k}$ and set it to zero; due to the constraint that $\sum_{k=1}^{K}\pi_{k} = 1$ we introduce a Lagrange multiplier. Thus we have:
 
 \begin{equation} \label{derivative-mix-prop-f-mm}
   \begin{aligned}
@@ -97,12 +97,12 @@ Setting $\lambda = - N$, the result, which is the same for any mixture model, is
 		\pi_{k} = \frac{1}{N} \sum_{i} \gamma(z_{ik})
 \end{equation}
 
-To derive the M-step for the parameters $\theta_{k}$, we only need to keep the terms of \emph{Eq. \ref{log-lik-expected-derivation-f}} that depend on $\theta_{k}$, that is:
-\begin{equation} \label{parameters-est-EM-f-mm}
+To derive the M-step for the parameters $\theta_{k}$, we only need to keep the terms of \emph{Eq. \ref{log-lik-expected-derivation-f-mm}} that depend on $\theta_{k}$, that is:
+\begin{equation} \label{parameters-est-EM-M-f-mm}
 		\ell(\theta_{k}) \triangleq \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(x_{i}|\theta_{k})
 \end{equation}
 and we optimize them with respect to $\theta_{k}$.
 
-The maximization of \emph{Eq. \ref{parameters-est-EM-f-mm}} yields different results depending on the probability distribution $p(x_{i}|\theta_{k})$. For most of the well known probability distributions, including the Normal, Binomial, Poisson, etc., direct maximization of $\ell(\theta_{k})$ is feasible. 
+The maximization of \emph{Eq. \ref{parameters-est-EM-M-f-mm}} yields different results depending on the probability distribution $p(x_{i}|\theta_{k})$. For most of the well known probability distributions, including the Normal, Binomial, Poisson, etc., direct maximization of $\ell(\theta_{k})$ is feasible. 
 
 For more complex likelihood functions, the maximization of $\ell(\theta_{k})$ may be intractable, thus numerical optimization strategies \citep{Nocedal2006}, such as conjugate gradients algorithm \citep{Hestenes1952} should be exploited. This extension of EM algorithm is known as \emph{Generalised EM}, or GEM, and it has been proved that on each EM iteration of the GEM algorithm the log likelihood increases, and thus converges to the maximum likelihood estimate \citep{Wu1983}.

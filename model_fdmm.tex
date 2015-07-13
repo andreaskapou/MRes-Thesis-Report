@@ -15,20 +15,20 @@
 \begin{tikzpicture}
 
   % Define nodes
-  \node[obs]                              (X) {$X_{n}$};
-  \node[latent, above=of X] 		(C) {$C_{n}$};
-  \node[latent, above=of C]  	(p) {$\pi$};
-  \node[latent, right=1cm of C]  (t) {$\theta_{k}$};
-  \node[latent, above=of t] 		(G) {$G_{0}$};
+  \node[obs]                    (X) {$x_{i}$};
+  \node[latent, above=of X] 	(Z) {$z_{i}$};
+  \node[latent, above=of Z]  	(p) {$\pi$};
+  \node[latent, right=1cm of Z] (t) {$\theta_{k}$};
+  \node[latent, above=of t] 	(G) {$G_{0}$};
 
   % Connect the nodes
-  \edge {C,t} {X} ; %
-  \edge {p} {C} ; %
+  \edge {Z,t} {X} ; %
+  \edge {p} {Z} ; %
   \edge {G} {t} ; %
 
   % Plates
   \plate {} {(t)} {$K$};
-  \plate {} {(C)(X)} {$N$};
+  \plate {} {(Z)(X)} {$N$};
 
 \end{tikzpicture}
 %\endpgfgraphicnamed

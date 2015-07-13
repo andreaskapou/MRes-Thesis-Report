@@ -5,7 +5,7 @@ The model can be fitted to the data using Maximum Likelihood Estimation (MLE). T
 \end{equation}
 The MLE approach is to find the set of parameters $\Theta$ that maximizes \emph{Eq. \ref{likelihood-f-mm}}, that is:
 \begin{equation} \label{MLE-f-mm}
-	\Theta^{*} =  \underset{\Theta}{\operatorname{argmax}} \; \ell(\Theta)
+	\hat{\Theta} =  \underset{\Theta}{\operatorname{argmax}} \; \ell(\Theta)
 \end{equation}
 
 Unfortunately, the presence of the summation inside the logarithm in \emph{Eq. \ref{likelihood-f-mm}} prevents the possibility of deriving an analytical solution. Thus, one should use numerical optimisation procedures, and one of the most widely used algorithms for estimating parameters of mixture models is \emph{Expectation Maximization} (EM) algorithm \citep{Dempster1977}. 

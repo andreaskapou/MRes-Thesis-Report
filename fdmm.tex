@@ -1,0 +1,40 @@
+\section{Finite Dirichlet Mixture Models} \label{fdmm-s}
+
+\begin{minipage}{0.6\textwidth}%
+  \hfill
+  \begin{center}
+	\input{model_fdmm}
+	\emph{Graphical Model of FDMM.}
+  \end{center}
+\end{minipage}
+%\hfill
+\begin{minipage}{0.1\textwidth}%\raggedright
+  \begin{equation*}
+  	\begin{aligned}
+  		\mathbf{\pi} \; & \sim \; Dir(\mathbf{\delta}) \\
+  		z_{i}|\mathbf{\pi} \; & \sim \; Cat(\mathbf{\pi}) \\
+  		\theta_{k} \; & \sim \mathcal{G}_{0}; \mathcal{H} \\
+  		x_{i}|z_{i}=k,\theta_{k} \; & \sim \; p(\cdot | \theta_{k})  
+  	\end{aligned} 
+  \end{equation*} 
+\end{minipage}
+
+\vspace*{5mm}
+The full joint distribution of the FDMM model by looking at the graphical representation factorizes as follows:
+\begin{equation}%\scriptstyle
+	p(\mathbf{X},\mathbf{Z},\mathbf{\pi},\Theta;\delta,\mathcal{H}) = p(\mathbf{X}|\mathbf{Z},\Theta) p(\mathbf{Z}|\pi) p(\pi|\delta) p(\Theta |\mathcal{G}_{0}; \mathcal{H})
+\end{equation}
+
+where $\mathcal{H}$ is the set of all the hyper-parameters of the $\mathcal{G}_{0}$ prior distribution related to the parameters $\Theta$, and $\mathbf{\delta}$ is a K-dimensional vector with the hyper-parameters of the \emph{Dirichlet} prior. 
+
+To do inference in the Bayesian framework, the posterior distribution of the parameters needs to be computed. By applying the Bayes Rule and conditioning on the observed data $\mathbf{X}$, the posterior distribution is simply proportional to the full joint. Thus:
+ 
+\begin{equation}%\scriptstyle
+  \begin{aligned}
+	p(\mathbf{Z},\mathbf{\pi},\Theta|\mathbf{X} ;\delta,\mathcal{H}) & = \frac{p(\mathbf{X}|\mathbf{Z},\mathbf{\pi},\Theta) p(\mathbf{Z},\mathbf{\pi},\Theta ;\delta,\mathcal{H})}{p(\mathbf{X})} \\
+	   & \propto p(\mathbf{X}|\mathbf{Z},\mathbf{\pi},\Theta) p(\mathbf{Z},\mathbf{\pi},\Theta ;\delta,\mathcal{H}) \\
+	   & = p(\mathbf{X}|\mathbf{Z},\Theta) p(\mathbf{Z}|\pi) p(\pi|\delta) p(\Theta |\mathcal{G}_{0}; \mathcal{H}) \\
+	   & = \bigg(\prod\limits_{i=1}^{N} p(x_{i}|z_{i},\theta_{z_{i}}) p(z_{i}|\pi)\bigg) p(\pi|\delta) \bigg(\prod\limits_{k=1}^{K} p(\theta_{k} |\mathcal{G}_{0}; \mathcal{H})\bigg)
+  \end{aligned}
+\end{equation}
+where we use the fact that $\mathbf{X}$ is conditionally independent of $\pi$ given $\mathbf{Z}$, \ie $\mathbf{X} \bigCI \pi \;| \; \mathbf{Z} $. 

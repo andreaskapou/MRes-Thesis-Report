@@ -1,9 +1,9 @@
-\section{Finite Dirichlet Mixture Models} \label{fdmm-s}
+\section{Hierarchical Bayesian Mixture Models} \label{fdmm-s}
 
 \subsection{Bayesian Statistics}
-The use of Maximum Likelihood for inferring the values of the parameters $\Theta$ belongs in the \emph{frequentist} interpretation of probability. In this approach, the parameters $\Theta$ are considered to be fixed, the values are inferred by an estimator, \eg MLE, and we get estimate error bars by considering a distribution of datasets $\mathbf{X}$ \cite[Ch. 1]{Bishop2006}. 
+The use of Maximum Likelihood for inferring the values of the parameters $\Theta$ belongs in the \emph{frequentist} interpretation of probability. In this approach, the parameters $\Theta$ are considered to be fixed, the values are inferred by an estimator, \eg MLE, and we get error bars for the estimates by considering a distribution over datasets $\mathbf{X}$ \cite[Ch. 1]{Bishop2006}. 
 
-On the other hand, in Bayesian statistics probabilities provide a quantification of uncertainty. In this setting, the dataset $\mathbf{X}$ is observed and hence is fixed, and we express our uncertainty in the model parameters, by considering the parameters themselves as random variables. Our initial beliefs about $\Theta$, before observing the data, are represented by a \emph{prior} probability distribution $p(\Theta)$. The effect of observing the data $\mathbf{X}$ is given through the \emph{likelihood} function $p(\mathbf{X}|\Theta)$, which expresses how probable are the observed data given the parameters. Hence, to update our beliefs about the value of $\Theta$, after observing the data $\mathbf{X}$, we use the machinery of probability theory, and more specifically Bayes' theorem, which is:
+On the other hand, in Bayesian statistics, probabilities provide a quantification of uncertainty or degrees of belief supported by the available evidence. In this setting, the dataset $\mathbf{X}$ is observed and hence is fixed, and we express our uncertainty in the model parameters, by considering the parameters themselves as random variables. Our initial beliefs about $\Theta$, before observing the data, are represented by a \emph{prior} probability distribution $p(\Theta)$. The effect of observing the data $\mathbf{X}$ is given through the \emph{likelihood} function $p(\mathbf{X}|\Theta)$, which is also referred to as the observation model.  The likelihood function expresses how probable are the observed data given the parameters, and is a function of the parameters. Hence, to update our beliefs about the value of $\Theta$, after observing the data $\mathbf{X}$, we use the machinery of probability theory, and more specifically Bayes' theorem, to evaluate the \emph{posterior} probability distribution:
 
 \begin{equation}
   \begin{aligned}
@@ -11,13 +11,15 @@ On the other hand, in Bayesian statistics probabilities provide a quantification
 	& = \frac{p(\mathbf{X}|\Theta) p(\Theta)}{\int p(\mathbf{X}|\Theta) p(\Theta) d\Theta}
   \end{aligned}
 \end{equation}
-and can be interpreted as follows:
+which can be interpreted as follows:
 \begin{equation}
 	\text{posterior} = \frac{likelihood \times prior}{evidence}
 \end{equation}
 
+For completeness, below are shown the main approaches for parameter estimation.
+
 \subsubsection*{ML Estimation of $\Theta$}
-Under the Maximum Likelihood approach we seek the value of $\Theta$ that maximizes the likelihood that is:
+Under the Maximum Likelihood approach we seek the value of $\Theta$ that maximizes the likelihood, that is:
 \begin{equation} \label{MLE-f-bayes}
 	\hat{\Theta} =  \underset{\Theta}{\operatorname{argmax}} \; p(\mathbf{X}|\Theta)
 \end{equation}
@@ -33,16 +35,26 @@ Under the Maximum a Posteriori approach we seek the value of $\Theta$ that maxim
 where the evidence $p(\mathbf{X})$ can be ignored since it does not depend on $\Theta$. Thus, MAP estimation, in contrast to ML, incorporates in the model our prior beliefs regarding the values of the parameters.
 
 \subsubsection*{Bayesian Estimation of $\Theta$}
-Under the Bayesian approach we compute the posterior distribution over the parameters, that is:
+Under a full Bayesian approach we compute the posterior distribution over the parameters, that is:
 \begin{equation} \label{posterio-f-bayes}
   \begin{aligned}
 	p(\Theta | \mathbf{X}) = \frac{p(\mathbf{X}|\Theta) p(\Theta)}{p(\mathbf{X})} 
   \end{aligned}
 \end{equation}
 
-Thus, in the Bayesian paradigm instead of estimating a fixed value for the parameters, we also capture the uncertainty of the estimation by computing the posterior distribution of the parameters. On the other hand, inference in frequentist statistics, \eg ML or MAP, involves in finding an optimum point estimate of the parameters, but they do not account for any uncertainty in the estimated value of the parameters. 
+Thus, in the Bayesian  instead of estimating a fixed value for the parameters, we also capture the uncertainty of the estimation by computing the posterior distribution of the parameters. On the other hand, i\eg ML or MAP estimations involve in finding an optimum point estimate of the parameters, but they do not account for any uncertainty in the estimated value of the parameters. 
 
-Even though Bayesian framework is appealing, it is limited by practical difficulties since we need to marginalize over the whole parameter space. And in most cases marginalization is computationally difficult since the integral might be intractable and difficult to approximate. To be able to compute Bayesian integrals analytically, \emph{conjugate priors} should be used if possible. For a given functional form of the likelihood $p(\mathbf{X}|\Theta)$, the prior $p(\Theta)$ is said to be conjugate for that likelihood, if the posterior $p(\Theta|\mathbf{X})$ has the same functional form as the prior.
+\subsection{Approximate Inference}
+Even though Bayesian framework is appealing, it is limited by practical difficulties since we need to marginalize over the whole parameter space, in order to compute the posterior. In most cases marginalization is computationally difficult since the integral might be intractable and difficult to approximate. To be able to compute some of the Bayesian integrals analytically, \emph{conjugate priors} should be used if possible. For a given functional form of the likelihood $p(\mathbf{X}|\Theta)$, the prior $p(\Theta)$ is said to be conjugate for that likelihood, if the posterior $p(\Theta|\mathbf{X})$ has the same functional form as the prior.
+
+When the posterior is intractable to compute, we need to resort to approximation schemes, and these fall broadly into two main classes. Deterministic approximation schemes, such as \emph{Variational Bayes} \citep{Beal2003}, are based on picking an approximation $q(\Theta|\mathbf{X})$ from some tractable family, \eg Gaussian, and then try to make this approximation as similar as possible to the true posterior distribution $p(\Theta|\mathbf{X})$, using a cost function such as KL-divergence \cite[Ch. 21]{Murphy2012}. Thus, Variational Bayes can be seen as an extension of EM algorithm for full Bayesian parameter estimation, since it constructs a lower bound on the marginal likelihood, and attempts to optimise this bound using an iterative scheme \citep{Beal2003}.
+
+
+
+\subsection{Finite Dirichlet Mixture Models}
+In a Bayesian framework, the parameters themselves are considered as random variables, thus prior distributions need to be placed over these parameters. If possible, conjugate priors should be used.
+
+ 
 
 \begin{minipage}{0.6\textwidth}%
   \hfill
@@ -83,4 +95,16 @@ To do inference in the Bayesian framework, the posterior distribution of the par
 \end{equation}
 where we use the fact that $\mathbf{X}$ is conditionally independent of $\pi$ given $\mathbf{Z}$, \ie $\mathbf{X} \bigCI \pi \;| \; \mathbf{Z} $. 
 
-This posterior is intractable to compute, thus we need to resort to approximation schemes, and these fall broadly into two main classes. Deterministic approximation schemes, such as \emph{Variational Bayes}, are based on analytical approximations the posterior distribution, by assuming that it factorizes in a particular way or that the posterior will have a specific form, such as Gaussian \cite[Ch. 10]{Bishop2006}.  
+
+Deriving Gibbs sampler for this model requires deriving an expression for the conditional distribution of every random variable conditioned on all the others. More specifically, for the FDMM we have the following quantities:
+\begin{equation}%\scriptstyle
+	p(\mathbf{\pi}|\mathbf{X},\mathbf{Z},\Theta;\delta,\mathcal{H}) = p(\mathbf{\pi} | \mathbf{Z};\delta) \sim Dir(\delta + N_{k})
+\end{equation}
+
+\begin{equation}%\scriptstyle
+	p(\mathbf{\Theta}|\mathbf{X},\mathbf{Z},\pi;\delta,\mathcal{H}) = p(\mathbf{\Theta}|\mathbf{X},\mathbf{Z};\mathcal{H}) \sim \mathcal{G}_{0}(\cdot|\mathcal{H})
+\end{equation}
+
+\begin{equation}%\scriptstyle
+	p(\mathbf{Z}|\mathbf{X},\mathbf{\Theta},\pi;\delta,\mathcal{H}) = p(\mathbf{\Theta}|\mathbf{X},\mathbf{Z};\mathcal{H}) \sim \mathcal{G}_{0}(\cdot|\mathcal{H})
+\end{equation}

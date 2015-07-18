@@ -1,4 +1,4 @@
-\section{DNA methylation data} \label{motivation-meth-l}
+\section{DNA methylation data} \label{dna-methylation-data-sect}
 
 DNA methylation is a well studied chemical modification of DNA, which occurs when a methyl group is attached to a DNA nucleotide. It is associated with diverse biological processes of direct clinical relevance, including gene and transposon silencing, X-chromosome inactivation, and  genomic imprinting \citep{Li1993, Mohandas1981}. In mammals,  methylation is observed almost exclusively on cytosine residues in the context of CpG dinucleotides (\ie C followed by G, where p stands for the phosphate group linking C and G). DNA methylation is said to be a true \emph{epigenetic modification}, since its mechanism of inheritance during the cell cycle is well established \citep{Law2010}. 
 
@@ -7,7 +7,7 @@ Due to the increased vulnerability of the 5-methylcytosines to randomly deaminat
 Bisulphite treatment \citep{Frommer1992} followed by next generation sequencing (NGS) can be used to measure the methylation level of the genomic DNA at a single-nucleotide resolution, and is termed Whole-Genome Bisulphite Sequencing (WGBS). Sodium bisulphite efficiently deaminates unmethylated cytosines to uracils, and leaves the 5-Methylcytosines unchanged. Uracils are read as thymines by DNA polymerase, thus when amplifying the data during PCR (Polymerase Chain Reaction), the unmethylated cytosines appear as thymines \citep{Krueger2012}. Reads are then aligned to a reference genome allowing changes of C to T during the mapping procedure. 
 
 The outline of the bisulphite treatment of a sample DNA sequence is shown in \emph{Figure \ref{bisulphite-pic}}.
-\begin{figure}[!h]
+\begin{figure}[!ht]
 	\begin{center}
  		\includegraphics[scale = 0.43]{images/bis-treatment.png}
 		\caption{\emph{Outline of the bisulphite treatment and subsequent PCR amplification of a sample DNA sequence. Unmethylated cytosines are deaminated to uracils by bisulphite, while 5-Methylcytosines are resistant to conversion \citep{Krueger2012}.}}

@@ -26,11 +26,11 @@ where $\Theta = (\theta_{1},..., \theta_{k}, \pi_{1},..., \pi_{k})$ is the set o
 Mixture models are \emph{generative models}, which means that they give us information for generating new objects. The procedure is the following: first we choose a component, with probabilities given by the mixing proportions, and then we generate an object from the corresponding probability distribution. Formally:
 \begin{equation}
 	\begin{aligned}
-		z_{i} \; & \sim \; Cat(\pi_{1},...,\pi_{K}) \\
+		z_{i} \; & \sim \; \mathcal{C}at(\pi_{1},...,\pi_{K}) \\
 		x_{i} | z_{i}=k \; & \sim \; p(x_{i}|\theta_{k})
 	\end{aligned}
 \end{equation}
-where $Cat(\pi_{1},...,\pi_{K})$ is the \emph{Categorical} distribution, \ie \emph{Multinomial} distribution over a single trial.
+where $\mathcal{C}at(\pi_{1},...,\pi_{K})$ is the \emph{Categorical} distribution, \ie \emph{Multinomial} distribution over a single trial.
 
 \emph{Fig.\ref{gmm-pic}} shows a Gaussian Mixture Model (GMM) with three components in two-dimensional space. It is clear that a single Gaussian distribution would be unable to capture the characteristics of the data since it is unimodal, but a linear superposition of $K$ Gaussian distributions can approximate the continuous density of the data to arbitrary accuracy. 
 

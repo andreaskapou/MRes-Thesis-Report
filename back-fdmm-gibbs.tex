@@ -39,7 +39,7 @@ By looking at the graphical model, and using the \emph{Markov blanket} for findi
 \begin{equation}%\scriptstyle
   \begin{aligned}
     \text{Generate} \; \; z_{i}^{(\tau+1)} \; & \propto \; \pi_{k}^{(\tau)}p(x_{i}|\theta_{k}^{(\tau)}) \; for \; k=1,...K \\
-    \text{Generate} \; \; \pi_{k}^{(\tau+1)} \; & \sim \; Dir\big(\delta + \sum_{i=1}^{N}\mathbbm{1}(z_{i}^{(\tau)}=k)\big) \\
+    \text{Generate} \; \; \pi_{k}^{(\tau+1)} \; & \sim \; \mathcal{D}ir\big(\delta + \sum_{i=1}^{N}\mathbbm{1}(z_{i}^{(\tau)}=k)\big) \\
     \text{Generate} \; \; \theta_{k}^{(\tau+1)} \; & \sim \; \mathcal{G}_{0}(\theta_{k}| \mathbf{X}, \mathbf{Z}^{(\tau)}=k; \mathcal{H})
   \end{aligned}
 \end{equation}

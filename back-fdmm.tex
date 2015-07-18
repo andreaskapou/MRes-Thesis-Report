@@ -1,4 +1,4 @@
-\section{Finite Dirichlet Mixture Models} \label{fdmm-s}
+\section{Finite Dirichlet Mixture Models} \label{back-fdmm-s}
 In a fully Bayesian treatment of mixture models, the Finite Dirichlet Mixture Model (FDMM) arises \citep{Diebolt1994}. In the Bayesian paradigm, the parameters themselves are considered as random variables, thus prior distributions need to be placed over the mixing proportions $\pi$ and the parameters of the observation model $\theta$. For mathematical convenience conjugate priors should be used, if possible. Thus, a natural choice is to use a symmetric Dirichlet prior for the mixing proportions $\pi$. For the parameters $\theta$, appropriate priors should be chosen depending on the probability distribution that the observed data $\mathbf{X}$ follow.
 
 A graphical representation of the FDMM is shown below, where $\mathcal{G}_{0}$ denoted the prior probability distribution for the parameters $\theta$. The specification of priors over the parameters, or even hyper-priors over the priors, results in the \emph{Bayesian hierarchical model}, since there are multiple layers of unknown quantities \cite{Richardson1997}. 
@@ -14,8 +14,8 @@ A graphical representation of the FDMM is shown below, where $\mathcal{G}_{0}$ d
 \begin{minipage}{0.1\textwidth}%\raggedright
   \begin{equation*}
   	\begin{aligned}
-  		\mathbf{\pi} \; & \sim \; Dir(\delta) \\
-  		z_{i}|\mathbf{\pi} \; & \sim \; Cat(\mathbf{\pi}) \\
+  		\mathbf{\pi} \; & \sim \; \mathcal{D}ir(\delta) \\
+  		z_{i}|\mathbf{\pi} \; & \sim \; \mathcal{C}at(\mathbf{\pi}) \\
   		\theta_{k} \; & \sim \mathcal{G}_{0}; \mathcal{H} \\
   		x_{i}|z_{i}=k,\theta_{k} \; & \sim \; p(\cdot | \theta_{k})  
   	\end{aligned} 

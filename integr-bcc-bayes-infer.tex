@@ -37,12 +37,13 @@ For mathematical convenience, \emph{conjugate priors} should be used over the pa
   \begin{aligned}
     L_{mn}^{(\tau+1)} \mid X_{mn}, \Theta_{m}^{(\tau)}, C_{n}^{(\tau)}, \alpha_{m}^{(\tau)} & \sim v(L_{mn}, C_{n}, \alpha_{m}) f_{m}(X_{mn}|\theta_{mk}) \\
 	\theta_{mk}^{(\tau+1)} \mid \mathbb{L}_{m}^{(\tau+1)}, \mathbb{X}_{m} & \sim \mathcal{G}_{0}(\theta_{mk} \mid \mathbb{X}_{m}, \mathbb{L}_{m} = k; \mathcal{H}) \\
-	\alpha_{m}^{(\tau+1)} \mid \mathbb{L}_{m}^{(\tau+1)}, \mathbb{C}^{(\tau)} & \sim \mathcal{TB} \big(\mathit{a}+\sum_{n}\mathbbm{1}(L_{mn}=k,C_{n}=k), \\
-	  & \quad \quad \quad \; \beta + N -\sum_{n}\mathbbm{1}(L_{mn}=k,C_{n}=k), \frac{1}{K}\big) \\
+%	\alpha_{m}^{(\tau+1)} \mid \mathbb{L}_{m}^{(\tau+1)}, \mathbb{C}^{(\tau)} & \sim \mathcal{TB} \big(\mathit{a}+\sum_{n}\mathbbm{1}(L_{mn}=k,C_{n}=k), \\
+%	  & \quad \quad \quad \; \beta + N -\sum_{n}\mathbbm{1}(L_{mn}=k,C_{n}=k), \frac{1}{K}\big) \\
+	\alpha_{m}^{(\tau+1)} \mid \mathbb{L}_{m}^{(\tau+1)}, \mathbb{C}^{(\tau)} & \sim \mathcal{TB} \big(\mathit{a} + Q_{mk}, \beta + N - Q_{mk}, \frac{1}{K}\big) \\
 	C_{n}^{(\tau+1)} \mid L_{mn}^{(\tau+1)}, \alpha^{(\tau+1)}, \pi^{(\tau)} & \sim \pi_{k} \prod_{m}v(L_{mn}, C_{n}, \alpha_{m}) \\
 	\pi_{k}^{(\tau+1)} \mid \mathbb{C}^{(\tau+1)} & \sim \mathcal{D}ir\big(\delta + \sum_{n}\mathbbm{1}(C_{n}=k)\big)
   \end{aligned}
 \end{equation*}
-where $\mathbbm{1}(\cdot)$ is an indicator function, equal to 1 if the quantities inside the function are satisfied, and 0 otherwise.
+where $Q_{mk} = \sum_{n}\mathbbm{1}(L_{mn}=k,C_{n}=k)$, and $\mathbbm{1}(\cdot,\cdot)$ is an indicator function, equal to 1 if the quantities inside the function are satisfied, and 0 otherwise.
 }
 \end{itemize}

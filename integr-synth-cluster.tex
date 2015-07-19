@@ -1,0 +1,8 @@
+\subsection{Clustering Accuracy} \label{integr-synth-cluster-sect}
+To evaluate the clustering accuracy of the BCC model, the same 100 realizations of the synthetic data used for evaluating the accuracy of $\hat{\alpha}$ will be used. The metrics considered are the source-specific and overall clustering errors, $\mathbf{L}_{error}$ and $\mathbf{C}_{error}$ respectively, which compute the average number of incorrect cluster assignments. 
+\begin{equation}
+  \begin{aligned}
+  	\mathbf{L}_{error} & = \frac{\sum\limits_{m=1}^{M}\sum\limits_{n=1}^{N}\mathbbm{1}(\hat{\mathbb{L}} \neq \mathbb{L})}{MN} \\
+  	\mathbf{C}_{error} & = \frac{\sum\limits_{n=1}^{n}\mathbbm{1}(\hat{\mathbb{C}} \neq \mathbb{C})}{N}
+  \end{aligned}
+\end{equation}

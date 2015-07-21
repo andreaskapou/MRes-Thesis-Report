@@ -1,0 +1,47 @@
+\section{Bayesian Consensus Clustering} \label{integr-bcc-sect}
+Motivated by the work of \citet{Lock2013}, this project is concerned in extending BCC to be applicable to NGS genomics data. Initial method was mainly intended for modelling \emph{continuous data}, and more specifically the observation model was assumed to follow a Gaussian distribution. Thus, the approach was mainly demonstrated on TCGA datasets, which were generated from \emph{microarray hybridization} experiments \citep{Babu2004}. But, with the advent of high-throughput sequencing methods, the data follow different probability distributions, since most experiments return \emph{count data} (see \emph{Chapter \ref{dataset-chapter}}). Thus, we need to extend BCC, so it can model data that follow different probability distributions, such as \emph{Binomial} and \emph{Poisson}.
+
+For the explanation of the BCC model, notation will be the same as the one used in \citet{Lock2013}. 
+
+To perform integrative clustering for M different data sources $\mathbb{X}_{1},..., \mathbb{X}_{M}$, the Finite Dirichlet Mixture Model (FDMM) (see \emph{Section \ref{back-fdmm-s}}) is extended, which leads us to the Bayesian Consensus Clustering model. BCC assumes that there are N common objects for each data source, where $X_{mn}$ denotes the data for object $n$ from source $m$. The data sources $\mathbb{X}_{m}$ can have any disparate structure, and each of them requires an arbitrary observation model $f_{m}(X_{mn}|\theta_{m})$, where $\theta_{m}$ denotes the model parameters for data source $m$.
+
+Let $\mathbb{L}_{m} = (L_{m1},...,L_{mN})$ denote the source specific clusterings and $\mathbb{C} = (C_{1},...,C_{N})$ denote the overall clustering of the data. The model assumes that both $\mathbb{C}$ and $\mathbb{L}_{m}$ will have the same number of possible clusters K, thus $L_{mn} \in \lbrace 1,...,K \rbrace$ and $C_{n} \in \lbrace 1,...,K \rbrace$, will denote the source-specific and the overall mixture components for observation $X_{mn}$, respectively.
+
+The source specific clusterings and the overall clustering are related to each other, and the strength of the relation is given by a dependence function $v(L_{mn}, C_{n}, \alpha_{m})$. The dependence function $v$ has the following form:
+\begin{equation}
+	v(L_{mn}, C_{n}, \alpha_{m}) = \left\{
+	\begin{array}{l l}
+		\alpha_{m},\quad \quad \quad if\quad C_{n} = L_{mn}\\
+		\frac{1-\alpha_{m}}{K-1},\quad \quad otherwise
+	\end{array}\right.
+\end{equation}
+where $\alpha_{m} \in [\frac{1}{K}, 1]$ is the called the \emph{adherence} parameter and controls the adherence of data source $\mathbb{X}_m$ to the overall clustering $\mathbb{C}$. Intuitively, it explains how much does the source specific clustering for source $m$ agrees with the overall clustering $\mathbb{C}$. For example, if $\alpha_{m} = 1$, then $\mathbb{L}_{m} = \mathbb{C}$, thus we have a perfect agreement between the source-specific and the overall clustering assignments. On the other extreme, if $\alpha_{m} = \frac{1}{K}$, then there is no relationship between $\mathbb{L}_{m}$ and $\mathbb{C}$. The adherence parameters $\alpha_{m}$ are estimated from the data, and they can either be equal for all data sources, \ie $\alpha_{1} = ... = \alpha_{M}$, or unique, and thus a different $\alpha_{m}$ for each data source $m$ needs to be estimated. 
+
+
+The graphical representation for the BCC model is shown below, where $\mathcal{G}_{0}$ denotes the prior probability distribution for the parameters $\theta_{mk}$, and $\mathcal{TB}(\cdot, \cdot, \frac{1}{K})$ denotes the \emph{Beta} distribution truncated below by $\frac{1}{K}$.
+
+\vspace*{5mm}
+\begin{minipage}{0.5\textwidth}%
+  \hfill
+  \begin{center}
+	\input{model_bcc}
+	\emph{Graphical Model of BCC.}
+  \end{center}
+\end{minipage}
+%\hfill
+\begin{minipage}{0.4\textwidth}%\raggedright
+  \begin{equation*}
+  	\begin{aligned}
+  		\mathbf{\pi} \; & \sim \; \mathcal{D}ir(\delta) \\
+  		\alpha \; & \sim \; \mathcal{TB}(\mathit{a}, \beta, \frac{1}{K}) \\
+  		\theta_{mk} \; & \sim \mathcal{G}_{0}(\cdot | \mathcal{H}) \\
+  		C_{n} \mid \mathbf{\pi} \; & \sim \; \mathcal{C}at(\mathbf{\pi}) \\
+  		L_{mn} \mid \alpha_{m}, C_{n} \; & \sim \; v(L_{mn}, C_{n}, \alpha_{m}) \\
+  		X_{mn} \mid L_{mn}=k,\theta_{mk} \; & \sim \; f_{m}(\cdot | \theta_{mk}) 
+  	\end{aligned} 
+  \end{equation*} 
+\end{minipage}
+\vspace*{5mm}
+
+\input{BCC/integr-bcc-bayes-infer}
+\input{BCC/integr-bcc-extend}

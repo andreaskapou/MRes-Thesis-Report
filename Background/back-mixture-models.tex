@@ -1,0 +1,46 @@
+\section{Mixture Models} \label{mixture-models-section}
+
+The aim of this project is focused on modelling and clustering multisource biomedical data. Clustering is a widely used exploratory tool, whose main task is to identify and group similar objects together. Clustering can be categorized as an \emph{unsupervised} learning approach, since we try to discover hidden structure in unlabelled data.     
+
+Different algorithms have been proposed for performing clustering, including hierarchical clustering (agglomerative or top down), k-means \citep{MacQueen1967}, and mixture models \citep{Titterington1985, McLachlan1988}. This project is concentrated on \emph{mixture models} since they are probabilistic, in the sense that they claim how the data might look like by modelling each cluster by certain probability density functions, \eg mixture of Gaussian distributions.  
+
+A mixture model is a convex combination of two or more probability density functions, possibly of different distributional types. By using a superposition of the individual probability density functions, mixture models are capable of approximating any continuous distribution to arbitrary accuracy \citep{Marin2005}. Mixture models can be formulated as Latent Variable Models (LVMs), where the latent variables have discrete states and can be interpreted as defining assignments of data points to specific components of the mixture model.
+ 
+Formally, let $\mathbf{X}$ be a dataset consisting of $N$ independent and identically distributed (i.i.d) objects $x_{1}, ..., x_{N}$. The goal of clustering is to partition the objects into at most K clusters. Let $p(x_{i}|\theta)$ be the probability distribution for $x_{i}$ parametrized by $\theta$, $z_{i} \in \lbrace 1,...,K \rbrace$ represent the component that is responsible for $x_{i}$, and $\pi_{k}$ be the probability that an object belongs to cluster $k$, \ie $\pi_{k} = p(z_{i} = k)$. We refer to $\pi_{k}$ as \emph{mixing proportions} and to $z_{i}$ as \emph{latent variables} since they are not observed in the data, but are introduced to allow complicated distributions to be formed from simpler components. 
+
+Thus, the mixture model is defined as follows:
+\begin{equation} \label{mix-model-f-mm}
+	\begin{aligned}
+		p(x_{i}|\Theta) & = \sum_{k=1}^{K} p(z_{i} = k) p(x_{i}|\theta_{k}) \\
+			& = \sum_{k=1}^{K}\pi_{k} p(x_{i}|\theta_{k})
+	\end{aligned}
+\end{equation}
+where $\Theta = (\theta_{1},..., \theta_{k}, \pi_{1},..., \pi_{k})$ is the set of all parameters, which must satisfy $\pi_{k} \in (0, 1) \; \text{for} \; k \in \lbrace 1,...,K \rbrace, \;$ and $\sum_{k=1}^{K}\pi_{k} = 1$.
+%\begin{equation}
+%		\pi_{k} \in (0, 1) \; \text{for} \; k \in \lbrace 1,...,K \rbrace, \; and 
+%\end{equation}
+%\begin{equation}
+%		\sum_{k=1}^{K}\pi_{k} = 1 
+%\end{equation}
+
+Mixture models are \emph{generative models}, which means that they give us information for generating new objects. The procedure is the following: first we choose a component, with probabilities given by the mixing proportions, and then we generate an object from the corresponding probability distribution. Formally:
+\begin{equation}
+	\begin{aligned}
+		z_{i} \; & \sim \; \mathcal{C}at(\pi_{1},...,\pi_{K}) \\
+		x_{i} | z_{i}=k \; & \sim \; p(x_{i}|\theta_{k})
+	\end{aligned}
+\end{equation}
+where $\mathcal{C}at(\pi_{1},...,\pi_{K})$ is the \emph{Categorical} distribution, \ie \emph{Multinomial} distribution over a single trial.
+
+\emph{Fig.\ref{gmm-pic}} shows a Gaussian Mixture Model (GMM) with three components in two-dimensional space. It is clear that a single Gaussian distribution would be unable to capture the characteristics of the data since it is unimodal, but a linear superposition of $K$ Gaussian distributions can approximate the continuous density of the data to arbitrary accuracy. 
+
+\begin{figure}[!ht]
+	\begin{center}
+ 		\includegraphics[scale = 0.43]{images/gmm.png}
+		 	  \caption{\emph{\textbf{Left:} Contours of constant density for each of the mixture components, where each component is denoted by a different colour. \textbf{Right:} A surface plot of the probability distribution $p(\mathbf{X}|\Theta)$ \cite[Ch. \ 2]{Bishop2006}.}}
+		\label{gmm-pic}
+	\end{center}
+\end{figure}
+
+\input{Background/back-mixt-model-estimation}
+\input{Background/back-mixt-model-em-algorithm}

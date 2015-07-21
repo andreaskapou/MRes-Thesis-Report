@@ -19,7 +19,7 @@ To perform inference in the Bayesian framework, the posterior distribution of th
 \end{equation}
 where we use the fact that $\mathbb{X}$ is conditionally independent of $\mathbb{C}, \pi$ and $\alpha$ given $\mathbb{L}$, \ie $\mathbb{X} \bigCI \mathbb{C}, \pi, \alpha \mid \mathbb{L}$, by looking at the \emph{Markov blanket} of $\mathbb{X}$. 
 
-This posterior is intractable to compute, thus we need to resort to an approximation scheme. The algorithm that will be used is \emph{Gibbs sampling} \cite{Geman1984}. Deriving Gibbs sampling for this model requires deriving an expression for the \emph{full conditional} distribution of every random variable. From the graphical representation of the BCC model, we can infer the conditional independencies between the latent variables by looking at their \emph{Markov blanket}. 
+This posterior is intractable to compute, thus we need to resort to an approximation scheme. The algorithm that will be used is \emph{Gibbs sampling} \citep{Geman1984}. Deriving Gibbs sampling for this model requires deriving an expression for the \emph{full conditional} distribution of every random variable. From the graphical representation of the BCC model, we can infer the conditional independencies between the latent variables by looking at their \emph{Markov blanket}. 
 
 For mathematical convenience, \emph{conjugate priors} should be used over the parameters, which would allow us to write analytically the full conditional distributions, and also draw samples from them. Thus:
 \begin{itemize}

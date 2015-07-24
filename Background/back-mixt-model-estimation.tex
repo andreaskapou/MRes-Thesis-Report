@@ -1,5 +1,5 @@
 \subsection{Mixture Model Estimation} \label{mixt-model-estimation-l-subsect}
-The model can be fitted to the data using Maximum Likelihood Estimation (MLE). The likelihood is the probability of observing the data given the parameters, and is a function of the parameters. Given a dataset $\mathbf{X}$ consisting of $N$ independent and identically distributed (i.i.d) objects $x_{1}, ..., x_{N}$, the log likelihood function for any mixture model is given by:
+The model can be fitted to the data using Maximum Likelihood Estimation (MLE). Given a dataset $\mathbf{X}$ consisting of $N$ i.i.d objects $x_{1}, ..., x_{N}$, the log likelihood function for any mixture model is given by:
 \begin{equation} \label{likelihood-f-mm}
 	\ell(\Theta) \triangleq p(\mathbf{X}|\Theta) = \sum_{i=1}^{N} \log \bigg\lbrace \sum_{k=1}^{K}\pi_{k}p(x_{i}|\theta_{k})\bigg\rbrace
 \end{equation}
@@ -8,4 +8,4 @@ The maximum likelihood approach is to find the set of parameters $\Theta$ that m
 	\hat{\Theta} =  \underset{\Theta}{\operatorname{argmax}} \; p(\mathbf{X}|\Theta)
 \end{equation}
 
-Unfortunately, the presence of the summation inside the logarithm in \emph{Eq. \ref{likelihood-f-mm}} prevents the possibility of deriving an analytical solution. Thus, one should use numerical optimisation procedures, and one of the most widely used algorithms for estimating parameters of mixture models is \emph{Expectation Maximization} (EM) algorithm \citep{Dempster1977}. 
+The presence of the summation inside the logarithm in \emph{Eq. \ref{likelihood-f-mm}} prevents the possibility of deriving an analytical solution. Thus, one should use numerical optimisation procedures, and one of the most widely used algorithms for estimating parameters of mixture models is \emph{Expectation Maximization} (EM) algorithm \citep{Dempster1977}. 

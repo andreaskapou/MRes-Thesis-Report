@@ -1,7 +1,5 @@
 \subsection{The EM algorithm} \label{em-algorithm-l-subsect}
-Expectation Maximization is a general iterative algorithm for computing MLEs when there are missing data or latent variables. As aforementioned, mixture models can be formulated as LVMs, thus, EM arises naturally and alternates between inferring the latent values given the parameters (\emph{E-step}), and then optimizing the parameters given the filled in data (\emph{M-step}). EM exploits the fact that if the data were fully observed then the MLE would be easy to compute. In their classic paper \cite{Dempster1977} proved that EM monotonically increases the log likelihood and it converges to a maximum likelihood estimator. The algorithm ends when a convergence criterion is satisfied, \eg the log likelihood does not increase above a certain threshold between two consecutive iterations. 
-
-\emph{Fig. \ref{em-algorithm-pic}} illustrates the EM algorithm for the mixture of two Gaussian distributions applied to the Old Faithful dataset.
+Expectation Maximization is a general iterative algorithm for computing MLEs when there are missing data or latent variables. As aforementioned, mixture models can be formulated as LVMs, thus, EM arises naturally and alternates between inferring the latent values given the parameters (\emph{E-step}), and then optimizing the parameters given the filled in data (\emph{M-step}). EM exploits the fact that if the data were fully observed then the MLE would be easy to compute. In their classic paper, \cite{Dempster1977} proved that EM monotonically increases the log likelihood and it converges to a maximum likelihood estimator. The algorithm ends when a convergence criterion is satisfied, \eg the log likelihood does not increase above a certain threshold between two consecutive iterations. \emph{Fig. \ref{em-algorithm-pic}} illustrates the EM algorithm for the mixture of two Gaussian distributions applied to the Old Faithful dataset.
 \begin{figure}[ht!]
      \begin{center}
         \subfigure[]{
@@ -33,9 +31,7 @@ Expectation Maximization is a general iterative algorithm for computing MLEs whe
    \label{em-algorithm-pic}
 \end{figure}
 
-Our presentation for the derivation of the EM algorithm is based on \cite[Ch. \ 11]{Murphy2012}.
-
-Let $x_{i}$ be the observed variables, and $z_{i}$ be the hidden or latent variables. We are interested in maximizing the log likelihood of the observed data:
+Our presentation for the derivation of the EM algorithm is based on \cite[Ch. \ 11]{Murphy2012}. Let $x_{i}$ be the observed variables, and $z_{i}$ be the hidden or latent variables. We are interested in maximizing the log likelihood of the observed data:
 \begin{equation} \label{log-lik-observed-f-mm}
 	\ell(\Theta) \triangleq \sum_{i=1}^{N} \log p(x_{i}|\theta) =  \sum_{i=1}^{N} \log \bigg[\sum_{z_{i}} p(x_{i}, z_{i}|\theta) \bigg]
 \end{equation}
@@ -56,7 +52,7 @@ where $t$ is the current iteration. The expectation is taken with respect to the
 	\Theta^{t} = \underset{\Theta}{\operatorname{argmax}} \; Q(\Theta, \Theta^{t-1})
 \end{equation}
 
-For the specific case of mixture models, the expected complete data log likelihood is:
+For the case of mixture models, the expected complete data log likelihood is:
 \begin{equation} \label{log-lik-expected-derivation-f-mm}
 	\begin{aligned}
 		Q(\Theta, \Theta^{t-1}) & \triangleq \mathbb{E} \big[\ell_{c}(\Theta) | \mathbf{X}, \Theta^{t-1}\big] \\
@@ -70,7 +66,6 @@ For the specific case of mixture models, the expected complete data log likeliho
 \end{equation}
 where, $\gamma(z_{ik}) \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1})$ is the responsibility that component k takes for explaining the observation $x_{i}$, and $\mathbbm{1}(z_{i}=k)$ is an indicator function, equal to 1 if $z_{i}=k$, and 0 otherwise.
 
-
 \subsubsection{E-Step}
 The E-step can be computed using the following form for any mixture model, which is the responsibility that component k takes for explaining the observation $x_{i}$:
 \begin{equation} \label{responsibilities-f-mm}
@@ -80,7 +75,6 @@ The E-step can be computed using the following form for any mixture model, which
 				   & = \frac{\pi_{k}p(x_{i}|z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} \pi_{j}p(x_{i}|z_{i}=j,\theta_{j}^{t-1})}
   \end{aligned}
 \end{equation}
-
 
 \subsubsection{M-Step}
 In the M-step we optimize $Q$ with respect to parameters $\Theta = (\theta_{1},...,\theta_{K},\pi_{1},...,\pi_{K})$.

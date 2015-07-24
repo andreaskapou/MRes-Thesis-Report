@@ -19,7 +19,7 @@ To perform inference in the Bayesian framework, the posterior distribution of th
 \end{equation}
 where we use the fact that $\mathbf{X}$ is conditionally independent of $\pi$ given $\mathbf{Z}$, \ie $\mathbf{X} \bigCI \pi \mid \mathbf{Z}$.
 
-This posterior is intractable to compute, thus we need to resort to an approximation scheme. The method that will be used, and the one that is extensively used for inference in mixture models, is Gibbs sampling \cite{Geman1984}. Deriving Gibbs sampling for this model requires deriving an expression for the full conditional distribution of every random variable. Since conjugate priors are used over the parameters, we can write analytically the full conditional distributions, and also we can easily draw samples from them.
+This posterior is intractable to compute, thus we need to resort to an approximation scheme. The method that will be used, and the one that is extensively used for inference in mixture models, is Gibbs sampling \citep{Geman1984}. Deriving Gibbs sampling for this model requires deriving an expression for the full conditional distribution of every random variable. Since conjugate priors are used over the parameters, we can write analytically the full conditional distributions, and also we can easily draw samples from them.
 
 By looking at the graphical model, and using the \emph{Markov blanket} for finding conditional independence between the variables, we obtain the following full conditional distributions:
 \begin{equation}%\scriptstyle

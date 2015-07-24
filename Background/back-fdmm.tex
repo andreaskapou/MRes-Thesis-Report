@@ -1,14 +1,14 @@
 \section{Finite Dirichlet Mixture Models} \label{back-fdmm-s}
-In a fully Bayesian treatment of mixture models, the Finite Dirichlet Mixture Model (FDMM) arises \citep{Diebolt1994}. In the Bayesian paradigm, the parameters themselves are considered as random variables, thus prior distributions need to be placed over the mixing proportions $\pi$ and the parameters of the observation model $\theta$. For mathematical convenience conjugate priors should be used, if possible. Thus, a natural choice is to use a symmetric Dirichlet prior for the mixing proportions $\pi$. For the parameters $\theta$, appropriate priors should be chosen depending on the probability distribution that the observed data $\mathbf{X}$ follow.
+In a fully Bayesian treatment of mixture models, the Finite Dirichlet Mixture Model (FDMM) arises \citep{Diebolt1994}. In the Bayesian paradigm, the parameters themselves are considered as random variables, thus prior distributions need to be placed over the mixing proportions $\pi$, and the parameters of the observation model $\theta$. For mathematical convenience conjugate priors should be used, if possible. Thus, a natural choice is to use a symmetric Dirichlet prior for the mixing proportions $\pi$. For the parameters $\theta$, appropriate priors should be chosen depending on the probability distribution that the observed data $\mathbf{X}$ follow.
 
-A graphical representation of the FDMM is shown below, where $\mathcal{G}_{0}$ denotes the prior probability distribution for the parameters $\theta_{k}$. The specification of priors over the parameters results in the \emph{Bayesian hierarchical model}, since there are multiple layers of unknown quantities \cite{Richardson1997}. 
+A graphical representation of the FDMM is shown below, where $\mathcal{G}_{0}$ denotes the prior probability distribution for the parameters $\theta_{k}$. The specification of priors over the parameters results in the \emph{Bayesian hierarchical model}, since there are multiple layers of unknown quantities \citep{Richardson1997}. 
 
 \vspace*{5mm}
 \begin{minipage}{0.6\textwidth}%
   \hfill
   \begin{center}
 	\input{model_fdmm}
-	\emph{Graphical Model of FDMM.}
+	\emph{Graphical Model of FDMM}
   \end{center}
 \end{minipage}
 %\hfill

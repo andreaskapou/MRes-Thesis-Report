@@ -5,9 +5,9 @@ For the explanation of the BCC model, notation will be the same as the one used 
 
 To perform integrative clustering for M different data sources $\mathbb{X}_{1},..., \mathbb{X}_{M}$, the Finite Dirichlet Mixture Model (FDMM) (see \emph{Section \ref{back-fdmm-s}}) is extended, which leads us to the Bayesian Consensus Clustering model. BCC assumes that there are N common objects for each data source, where $X_{mn}$ denotes the data for object $n$ from source $m$. The data sources $\mathbb{X}_{m}$ can have any disparate structure, and each of them requires an arbitrary observation model $f_{m}(X_{mn}|\theta_{m})$, where $\theta_{m}$ denotes the model parameters for data source $m$.
 
-Let $\mathbb{L}_{m} = (L_{m1},...,L_{mN})$ denote the source specific clusterings and $\mathbb{C} = (C_{1},...,C_{N})$ denote the overall clustering of the data. The model assumes that both $\mathbb{C}$ and $\mathbb{L}_{m}$ will have the same number of possible clusters K, thus $L_{mn} \in \lbrace 1,...,K \rbrace$ and $C_{n} \in \lbrace 1,...,K \rbrace$, will denote the source-specific and the overall mixture components for observation $X_{mn}$, respectively.
+Let $\mathbb{L}_{m} = (L_{m1},...,L_{mN})$ denote the source-specific clusterings and $\mathbb{C} = (C_{1},...,C_{N})$ denote the overall clustering of the data. The model assumes that both $\mathbb{C}$ and $\mathbb{L}_{m}$ will have the same number of possible clusters K, thus $L_{mn} \in \lbrace 1,...,K \rbrace$ and $C_{n} \in \lbrace 1,...,K \rbrace$, will denote the source-specific and the overall mixture components for observation $X_{mn}$, respectively.
 
-The source specific clusterings and the overall clustering are related to each other, and the strength of the relation is given by a dependence function $v(L_{mn}, C_{n}, \alpha_{m})$. The dependence function $v$ has the following form:
+The source-specific clusterings and the overall clustering are related to each other, and the strength of the relation is given by a dependence function $v(L_{mn}, C_{n}, \alpha_{m})$. The dependence function $v$ has the following form:
 \begin{equation}
 	v(L_{mn}, C_{n}, \alpha_{m}) = \left\{
 	\begin{array}{l l}

@@ -16,7 +16,7 @@ A less ambitious goal is to experimentally assess the \emph{mixing} of the chain
 
 From the traces it is clear that the mixing of the chain is good, and the algorithm has found two modes of the posterior distribution where each parameter individually explores. Parameter $\lambda_{1}$ explores values around 8, whereas $\lambda_{2}$ explores values around 15, which are the true values of the generated Poisson mixtures, as explained in \emph{Section \ref{integr-synth-data-sect}}. Since, each parameter moves over a range of values around its mode and does not \emph{jump} across different modes, the marginal density plots are \emph{unimodal}.
 
-To assess correlation between successive samples, the \emph{Auto Correlation Function (ACF)} is used. ACF measures the correlation of the values of the chain at different points in time. The \emph{lag} is the time-distance between the pair of values to be compared. The ACF for the $\lambda_{k}$ parameters of the Poisson mixture model is shown in \emph{Fig. \ref{acfL-pic}}. It is evident that the samples become uncorrelated quite fast, when $lag \approx 10$, and this allows the chain to mix well.
+To assess correlation between successive samples, the \emph{Auto Correlation Function (ACF)} is used. ACF measures the correlation of the values of the chain at different points in time. The \emph{lag} is the time-distance between the pair of values to be compared. The ACF for the $\lambda_{k}$ parameters of the Poisson mixture model is shown in \emph{Fig. \ref{acfL-pic}}. It is evident that the samples become uncorrelated quite fast, and this allows the chain to mix well.
 \begin{figure}[!ht]
 \begin{center}
  \includegraphics[scale = 0.40]{images/acfL.png}
@@ -38,4 +38,4 @@ The Gelman-Rubin diagnostic was used to assess the convergence of the $\lambda_{
 \end{center}
 \end{figure}
 
-For brevity, only the $\lambda_{k}$ parameters of the Poisson mixture model were shown for analysis of convergence of the MCMC simulations, but similar results were obtained also for all the other parameters inferred from the BCC model. Also, the different convergence diagnostics methods were introduced without in-depth discussion. A comprehensive discussion on the convergence diagnostics for MCMC chains, including many examples, are provided in \citep{Brooks1999, Robert2009}.
+For brevity, only the $\lambda_{k}$ parameters of the Poisson mixture model were shown for analysis of convergence of the MCMC simulations, but similar results were obtained also for all the other parameters inferred from the BCC model. Also, for a comprehensive discussion on the convergence diagnostics for MCMC chains, with many examples, the reader should consult \citep{Brooks1999, Robert2009}.

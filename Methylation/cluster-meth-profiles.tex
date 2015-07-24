@@ -1,37 +1,39 @@
 \section{Clustering DNA methylation profiles} \label{cluster-meth-s}
+After defining a model for the DNA methylation profiles, a statistical method needs to be proposed in order to perform model-based clustering of DNA methylation profiles. 
 
-\subsection{EM for clustering methylation profiles}
-In this section, we will derive the \emph{E} and \emph{M} steps for clustering methylation profiles using the model described in \emph{Section \ref{model-meth-profiles-s}}.
+A mixture model approach \citep{McLachlan1988} is chosen to cluster DNA methylation profiles, and the model is fitted to the data using maximum likelihood. Thus, \emph{EM algorithm} \citep{Dempster1977} is chosen to estimate the mixture model parameters. Below we derive the \emph{E} and \emph{M} steps for clustering methylation profiles using the \emph{Binomial distributed Probit regression function} as the observation model. 
 
-But before, we have to explicitly introduce the parameters $\theta_{k}$ of the model, excluding the mixing proportions $\pi_{k}$ which are present for any mixture model. For example, in a Gaussian Mixture Model (GMM) the model parameters $\theta_{k}$, are the mean $\mu_{k}$ and the variance $\sigma_{k}^{2}$ of the Gaussian components. In our model, the Binomial distributed Probit regression function given in \emph{Eq. \ref{likel-binom-prob-f}}, the parameters are the coefficients of the $n^{th}$ degree polynomial function $\mathbf{g}_{i}$. Thus, during the EM algorithm we infer these sets of parameters for each cluster $k$. For example, for a $2^{nd}$ degree polynomial, we can rewrite \emph{Eq. \ref{likel-binom-prob-f}} by explicitly showing the model parameters as follows:
-\begin{equation} \label{likel-binom-prob-example1-f}
+But before, we have to explicitly introduce the parameters $\theta_{k}$ of the observation model, excluding the mixing proportions $\pi_{k}$ which are present for any mixture model. For example, in a Gaussian Mixture Model (GMM) the model parameters $\theta_{k}$ are the mean $\mu_{k}$ and the variance $\sigma_{k}^{2}$ of the Gaussian components. In our model, the Binomial distributed Probit regression function, the parameters are the coefficients of the $n^{th}$ degree polynomial function $\mathbf{g}_{i}$. Thus, during the EM algorithm we infer these sets of parameters for each cluster $k$. 
+
+For example, for a $2^{nd}$ degree polynomial, we can rewrite \emph{Eq. \ref{likel-binom-prob-f-meth}} by explicitly showing the model parameters as follows:
+\begin{equation} \label{likel-binom-prob-example1-f-meth}
   \begin{split}
 	p(\mathbf{y}_{i}|\mathbf{f}_{i}, \theta) & = \prod_{l=1}^{L} p(y_{il}|f_{il}, \theta) \\
 							 & = \prod_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta)\big) \\
 							 & = \prod_{l=1}^{L} \binom{t_{il}}{m_{il}} \Phi(\alpha x_{il}^{2} + \beta x_{il} + c)^{m_{il}} (1 - \Phi(\alpha x_{il}^{2} + \beta x_{il} + c)\big)^{t_{il} - m_{il}}
   \end{split}
 \end{equation}
-
 where $\theta = (\alpha, \beta, c)$.
 
-\subsubsection{E-Step}
-In the E-step we compute the responsibility that component k takes on explaining observations $\mathbf{y_{i}}$, and by substituting the proposed likelihood function to \emph{Eq.}, we have:
-\begin{equation} \label{responsibilities-binom-prob-model-f}
+\subsection{E-Step}
+In the E-step we compute the responsibility that component k takes on explaining observations $\mathbf{y_{i}}$, and by substituting the proposed likelihood function to \emph{Eq. \ref{responsibilities-f-mm}}, we have:
+\begin{equation} \label{responsibilities-binom-prob-model-f-meth}
   \begin{split}
 	\gamma(z_{ik}) & \triangleq p(z_{i}=k|\mathbf{y_{i}},\theta_{k}^{t-1}) \\
 				   & = \frac{\pi_{k}p(\mathbf{y}_{i}|\mathbf{f}_{i},z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} \pi_{j}p(\mathbf{y}_{i}|\mathbf{f}_{i},z_{i}=j,\theta_{j}^{t-1})} \\
 				   & = \frac{\pi_{k} \prod\limits_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta_{k}^{t-1})\big)} {\sum\limits_{j=1}^{K} \pi_{j} \prod\limits_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta_{j}^{t-1})\big)}
   \end{split}
 \end{equation}
+Thus, the E-step essentially remains the same, with the difference that at each iteration we need to evaluate pointwise a different observation model. 
 
-\subsubsection{M-Step}
-In the M-step, we optimize \emph{Eq. } with respect to $\pi_{k}$ and $\theta_{k}$. The update for the mixing proportions $\pi_{k}$ on each M-step, is the same as shown in \emph{Eq. \ref{mixing-proportions-binom-prob-est-f}}, that is:
-\begin{equation} \label{mixing-proportions-binom-prob-est-f}
+\subsection{M-Step}
+In the M-step, we need to optimize \emph{Eq. \ref{log-lik-expected-derivation-f-mm}} with respect to $\pi_{k}$ and $\theta_{k}$. The update for the mixing proportions $\pi_{k}$ for each M-step remains the same as the simple mixture model, that is:
+\begin{equation} \label{mixing-proportions-binom-prob-est-f-meth}
 		\pi_{k} = \frac{1}{N} \sum_{i} \gamma(z_{ik})
 \end{equation}
 
-To update the parameters $\theta_{k}$, we need to optimize $\ell(\theta_{k})$. Substituting our model to \emph{Eq. \ref{parameters-est2-binom-prob-EM-f}}, the quantity that needs to be maximized is:
-\begin{equation} \label{parameters-est2-binom-prob-EM-f}
+To update the parameters $\theta_{k}$, we need to optimize the following quantity:
+\begin{equation} \label{parameters-est2-binom-prob-EM-f-meth}
   \begin{split}
 	\ell(\theta_{k}) & \triangleq \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(\mathbf{y}_{i}|\mathbf{f}_{i}, \theta_{k}) \\
 					 & = \sum_{i} \sum_{k} \gamma(z_{ik}) \log \bigg( \prod_{l} Binom \big(t_{il}, \Phi(g_{il}; \theta_{k})\big) \bigg)\\
@@ -39,12 +41,12 @@ To update the parameters $\theta_{k}$, we need to optimize $\ell(\theta_{k})$. S
   \end{split}
 \end{equation}
 
-Direct maximization of this quantity w.r.t the parameters $\theta_{k}$ is not feasible, thus Conjugate Gradients method \citep{Hestenes1952} will be used, which is a first order numerical optimization algorithm for solving particular systems of linear equations. Thus, it requires to compute the \emph{gradient}, which for the example of the $2^{nd}$ degree polynomial is:
+Direct maximization of this quantity w.r.t the parameters $\theta_{k}$ is not feasible, thus Conjugate Gradients method \citep{Hestenes1952} will be used, which is a first order numerical optimization algorithm for solving particular systems of linear equations. Hence, it requires to compute the \emph{gradient}, which for the example of the $2^{nd}$ degree polynomial is:
 
 \begin{equation} \label{gradient-f}
 	\nabla\ell = \bigg( \frac{\partial \ell(\theta_{k})}{\partial \alpha}, \frac{\partial \ell(\theta_{k})}{\partial \beta}, \frac{\partial \ell(\theta_{k})}{\partial c}\bigg) 
 \end{equation}
-where the partial derivatives are given in the equations below (see Appendix ... for the whole derivations):
+where the partial derivatives are given in the equations below (see \emph{Appendix \ref{derivatives-m-step-s}} for the whole derivations):
 \begin{equation} \label{derivative-a-f}
 	\frac{\partial \ell(\theta_{k})}{\partial \alpha} =  \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il}^{2} \mathbf{\phi}(g_{il};\theta_{k})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il};\theta_{k})}{\Phi(g_{il};\theta_{k})\big(1-\Phi(g_{il};\theta_{k})\big)} \bigg) \bigg]
 \end{equation}

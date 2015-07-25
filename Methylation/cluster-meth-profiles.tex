@@ -59,3 +59,13 @@ where the partial derivatives are given in the equations below (see \emph{Append
 	\frac{\partial \ell(\theta_{k})}{\partial c} =  \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ \mathbf{\phi}(g_{il};\theta_{k})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il};\theta_{k})}{\Phi(g_{il};\theta_{k})\big(1-\Phi(g_{il};\theta_{k})\big)} \bigg) \bigg]
 \end{equation}
 where $\mathbf{\phi}$ is the \emph{probability density function (pdf)} for the standard normal distribution $\mathcal{N}(0,1)$.
+
+\subsection{EM initialization}
+EM algorithm is sensitive to the choice of the initial parameters $\theta_{k}$ and $\pi_{k}$. Thus, careful initialization would result in faster convergence to local maximum or even in finding the best local maximum of the likelihood function. When using simple mixture models, like GMMs, the parameters themselves have some physical interpretation, \eg the mean value of the data, thus \emph{k-means} algorithm can be used directly on the observation data to initialize the parameters.
+
+The model proposed in this work, is more complex since each object is a vector of observations, and these vectors may also be of different length. To provide a sensible initialization of the parameters, the following procedure is taken:
+\begin{itemize}
+	\item{For each object, we fit individually a latent function using \emph{Conjugate Gradients} algorithm to obtain a coefficient vector of the polynomial, whose dimensionality depends on the degree of the polynomial.}
+	\item{After extracting all the coefficient vectors for each object, we run \emph{k-means} algorithm on the coefficient vectors.}
+	\item{The output of \emph{k-means} algorithm, will be the initial values for the model parameters.}
+\end{itemize}

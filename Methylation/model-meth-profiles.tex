@@ -5,7 +5,7 @@ DNA methylation data generated from NGS technology can be modelled with a Binomi
 \end{equation}
 where \emph{p} is the unknown methylation level of the CpG site.
 
-We are interested in modelling methylation profiles across different genomic regions, \eg promoter regions, hence the data can be represented as a set of vectors, whose dimensionality \emph{L} depends on the number of the individual CpG sites for that specific region. Thus, each region \emph{i} can be represented by a vector $\mathbf{y}_{i}$ of dimensionality $L_{i}$, and each entry of the vector consists of the tuple:
+We are interested in modelling methylation profiles across different genomic regions, \eg promoter regions, hence the data can be represented as a set of vectors, whose dimensionality \emph{L} depends on the number of the individual CpG sites for that specific region. Formally, each region \emph{i} can be represented by a vector $\mathbf{y}_{i}$ of dimensionality $L_{i}$, and each entry of the vector consists of the tuple:
 \begin{equation}
 	%n_{i}^{l} = \frac{m_{i}^{l}}{t_{i}^{l}}
 	y_{il} = (m_{il},t_{il})

@@ -1,7 +1,7 @@
 \section{Clustering DNA methylation profiles} \label{cluster-meth-s}
-After defining a model for the DNA methylation profiles, a statistical method needs to be proposed in order to perform model-based clustering of DNA methylation profiles. 
+After defining a model for the DNA methylation profiles, a statistical method needs to be proposed in order to perform model-based clustering of methylation profiles. 
 
-A mixture model approach \citep{McLachlan1988} is chosen to cluster DNA methylation profiles, and the model is fitted to the data using maximum likelihood. Thus, \emph{EM algorithm} \citep{Dempster1977} is chosen to estimate the mixture model parameters. Below we derive the \emph{E} and \emph{M} steps for clustering methylation profiles using the \emph{Binomial distributed Probit regression function} as the observation model. 
+A mixture model approach \citep{McLachlan1988} is chosen to cluster methylation profiles, and the model is fitted to the data using maximum likelihood. Thus, \emph{EM algorithm} \citep{Dempster1977} is chosen to estimate the mixture model parameters. Below we derive the \emph{E} and \emph{M} steps for clustering methylation profiles using the \emph{Binomial distributed Probit regression function} as the observation model. 
 
 But before, we have to explicitly introduce the parameters $\theta_{k}$ of the observation model, excluding the mixing proportions $\pi_{k}$ which are present for any mixture model. For example, in a Gaussian Mixture Model (GMM) the model parameters $\theta_{k}$ are the mean $\mu_{k}$ and the variance $\sigma_{k}^{2}$ of the Gaussian components. In our model, the Binomial distributed Probit regression function, the parameters are the coefficients of the $n^{th}$ degree polynomial function $\mathbf{g}_{i}$. Thus, during the EM algorithm we infer these sets of parameters for each cluster $k$. 
 
@@ -61,7 +61,7 @@ where the partial derivatives are given in the equations below (see \emph{Append
 where $\mathbf{\phi}$ is the \emph{probability density function} for the standard normal distribution $\mathcal{N}(0,1)$.
 
 \subsection{EM initialization}
-EM algorithm is sensitive to the choice of the initial parameters. Thus, careful initialization would result in faster convergence to local maximum or even in finding better local maximum. When using simple mixture models, like GMMs, the parameters themselves have physical interpretation, \eg the mean value of the data, thus \emph{k-means} algorithm can be used directly on the observation data to initialize the parameters.
+EM algorithm is sensitive to the choice of the initial parameters. Thus, careful initialization would result in faster convergence to local maximum or even in finding better local maxima. When using simple mixture models, like GMMs, the parameters themselves have physical interpretation, \eg the mean value of the data, thus \emph{k-means} algorithm can be used directly on the observation data to initialize the parameters.
 
 The model proposed in this work, is more complex since each object is a vector of observations, and these vectors may also be of different length. To provide a sensible initialization of the parameters, the following procedure is taken:
 \begin{itemize}

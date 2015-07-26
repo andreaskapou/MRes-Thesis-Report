@@ -6,7 +6,7 @@ The main approaches to deduce and quantify the transcriptome are based either on
 With the advent of NGS technology, \emph{RNA-Seq} (RNA sequencing) experiments \citep{Wang2009} are widely used for transcriptome profiling. The process for generating RNA-Seq data is simple and is shown in \emph{Fig. \ref{rnaSeq-pic}}. Initially some RNA fraction of interest is isolated for further analysis, \eg mRNA which mostly contains poly(A) at its tails. Then the selected RNA is fragmented and reverse transcribed for the synthesis of cDNA libraries. Millions of reads are then obtained by sequencing the cDNA molecules using massively parallel sequencing technologies. The resulting reads are then aligned and mapped to a \emph{reference genome} (\ie transcriptome assembly), using alignment tools such as \emph{Bowtie} \citep{Langmead2009} and \emph{Cufflinks} \citep{Trapnell2010}. Finally, the number of reads that were mapped to specific genes are analysed to quantify gene expression \citep{Pepke2009}. Since we have non-negative read count data, a natural choice is to model the observations using a \emph{Poisson} distribution.
 \begin{figure}[!ht]
 \begin{center}
- \includegraphics[scale = 0.45]{images/rna-seq}
+ \includegraphics[scale = 0.37]{images/rna-seq}
 \caption{\emph{Outline of RNA-Seq method. First, RNA is isolated, and then it is fragmented and reverse transcribed for synthesis of cDNA library. The cDNA is sequenced to produce millions of short reads and these reads are then aligned and mapped to a reference genome. Quantitative analysis of gene expression is based on the read counts \citep{Pepke2009}.}}
 \label{rnaSeq-pic}
 \end{center}

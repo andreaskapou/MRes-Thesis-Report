@@ -7,7 +7,7 @@ We need to compute the partial derivatives w.r.t. parameters $\theta_{k}$ of the
   \begin{split}
 	\ell(\theta_{k}) & \triangleq \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(\mathbf{y}_{i}|\mathbf{f}_{i}, \theta_{k}) \\
 					 & = \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \log \bigg(Binom \big(t_{il}, \Phi(g_{il}; \theta_{k})\big) \bigg) \\
-					 & =  \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \bigg(\log \binom{t_{il}}{m_{il}} + m_{il} \log \Phi(g_{il}; \theta_{k}) + \big(t_{il} - m_{il} \big) \log \big(1 - \Phi(g_{il}; \theta_{k})\big)\bigg)
+					 & \propto  \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \bigg(m_{il} \log \Phi(g_{il}; \theta_{k}) + \big(t_{il} - m_{il} \big) \log \big(1 - \Phi(g_{il}; \theta_{k})\big)\bigg)
   \end{split}
 \end{equation}
 where $\theta_{k} = (\alpha, \beta, c)$ in the example of $2^{nd}$ degree polynomial, i.e. $g_{il} = \alpha x^{2} + \beta x + c$. To not clutter notation, let $\Phi(g_{il}) = \Phi(g_{il}; \theta_{k})$. Thus, for the partial derivatives w.r.t. $\alpha$ parameter we have the following derivation:
@@ -33,7 +33,7 @@ In a similar fashion we can derive the partial derivatives $\frac{\partial \ell(
 The likelihood for the Poisson log-linear mixture model is given by:
 \begin{equation} \label{poisson-log-lin-mm-app}
   \begin{split}
-	\ell(\mathbf{\lambda}) & \triangleq p(\mathbf{x} | \mathbf{\lambda}) = \sum\limits_{z} p(\mathbf{z}) p(\mathbf{x} | \mathbf{\lambda}, \mathbf{z})\\
+	\ell(\mathbf{\lambda}) \triangleq p(\mathbf{x} | \mathbf{\lambda}) & = \sum\limits_{z} p(\mathbf{z}) p(\mathbf{x} | \mathbf{\lambda}, \mathbf{z})\\
 		& = \prod_{i} \sum_{k} p(z_{i} = k) \prod_{j} \prod_{l} \mathcal{P}(x_{ijl} | \mu_{ijlk}) \\
 		& = \prod_{i} \sum_{k} \pi_{k} \prod_{j} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})
   \end{split}

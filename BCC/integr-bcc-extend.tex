@@ -3,14 +3,14 @@ As it was aforementioned, with the advent of high-throughput sequencing methods,
 
 Due to conditional independence structure of the mixture models, changing the observation model for data source $\mathbb{X}_{m}$ does not affect the mixing proportions $\pi$, the adherence parameter $\alpha$, and the overall clustering assignments $\mathbb{C}$. Thus, modelling and subsequently inferring these variables remains the same as it was explained in the previous section.
 
-The source-specific clustering assignments $\mathbb{L}_{m}$ depend on the observation model for data source $\mathbb{X}_{m}$. Hopefully, the update equations for $\mathbb{L}_{m}$ on each Gibbs simulation step are straightforward to adapt, since we just need to evaluate $f_{m}(X_{mn}|\theta_{m})$ pointwise, which for most known probability distribution is easy to compute.
+The source-specific clustering assignments $\mathbb{L}_{m}$ depend on the observation model of the data sources $\mathbb{X}_{m}$. Hopefully, the update equations for $\mathbb{L}_{m}$ on each Gibbs simulation step are straightforward to adapt, since we just need to evaluate $f_{m}(X_{mn}|\theta_{m})$ pointwise, which for most known probability distribution is easy to compute.
 
 Thus, the focus of this section is mainly in modelling, \ie defining a prior distribution, and inferring the parameters $\theta_{m}$ of the observation model. 
 
 \subsubsection*{Gaussian observation model}
 For completeness we provide details for the Gaussian observation model, as it was described in \citet{Lock2013}. When the data source $\mathbb{X}_{m}$ follows a Gaussian mixture distribution, we have:
 \begin{equation}
-	X_{mn} \mid L_{mn} = k, \theta_{k} \sim \mathcal{N}\big(\mu_{mk}, \tau_{mk}^{-1}\big)
+	X_{mn} \mid L_{mn} = k, \theta_{mk} \sim \mathcal{N}\big(\mu_{mk}, \tau_{mk}^{-1}\big)
 \end{equation}
 where $\mathcal{N}$ denotes the \emph{Normal} or \emph{Gaussian} distribution, $\mu_{mk}$ is the \emph{mean} parameter, and $\tau_{mk}$ is the \emph{precision} parameter, \ie the reciprocal of the variance, $\tau_{mk} = \frac{1}{\sigma_{mk}^{2}}$.
 
@@ -50,7 +50,7 @@ If the data source $\mathbb{X}_{m}$ is $D_{m}$-dimensional, then we can use eith
 \subsubsection*{Binomial observation model}
 When the data source $\mathbb{X}_{m}$ follows a Binomial mixture distribution, we have:
 \begin{equation}
-	X_{mn} \mid L_{mn} = k, \theta_{k} \sim \mathcal{B}inom\big(t_{mk}, \rho_{mk}\big)
+	X_{mn} \mid L_{mn} = k, \theta_{mk} \sim \mathcal{B}inom\big(t_{mk}, \rho_{mk}\big)
 \end{equation}
 where $t_{mk}$ is \emph{known} and denotes the total number of experiments, and $\rho_{mk}$ is the parameter for the probability of success.
 
@@ -77,7 +77,7 @@ where the posterior parameter values for the $\mathcal{B}eta(\cdot,\cdot)$ distr
 \subsubsection*{Poisson observation model}
 When the data source $\mathbb{X}_{m}$ follows a Poisson mixture distribution, we have:
 \begin{equation}
-	X_{mn} \mid L_{mn} = k, \theta_{k} \sim \mathcal{P}ois\big(\lambda_{mk}\big)
+	X_{mn} \mid L_{mn} = k, \theta_{mk} \sim \mathcal{P}ois\big(\lambda_{mk}\big)
 \end{equation}
 where $\lambda_{mk}$ denotes the mean and variance parameter.
 

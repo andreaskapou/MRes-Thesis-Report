@@ -7,7 +7,6 @@ The full joint distribution of the FDMM model, by looking at the graphical repre
 	   & = \bigg(\prod\limits_{i=1}^{N} p(x_{i}|z_{i},\theta_{z_{i}}) p(z_{i}|\pi)\bigg) p(\pi;\delta) \bigg(\prod\limits_{k=1}^{K} p(\theta_{k}; \mathcal{H})\bigg)
   \end{aligned}
 \end{equation}
-
 where $\mathcal{H}$ is the set of all the hyper-parameters of the $\mathcal{G}_{0}$ prior distribution related to the parameters $\theta$, and $\delta$ is a K-dimensional vector with the hyper-parameters of the symmetric \emph{Dirichlet} prior. 
 
 To perform inference in the Bayesian framework, the posterior distribution of the variables needs to be estimated. By applying Bayes' theorem and conditioning on the observed data $\mathbf{X}$, the posterior distribution is the following:
@@ -32,7 +31,7 @@ By looking at the graphical model, and using the \emph{Markov blanket} for findi
 
 \noindent\textbf{Gibbs sampling algorithm}: 
 \begin{itemize}
-\item {Initially at simulation step 0, parameter values $\pi^{(0)}$, $\theta^{(0)}$, and $\mathbf{Z}^{(0)}$ are chosen arbitrarily.}
+\item {Initially at simulation step 0, parameter values $\mathbf{Z}^{(0)}$, $\pi^{(0)}$, and $\theta^{(0)}$ are chosen arbitrarily.}
 \item {Suppose at simulation step $\tau$ we have sampled values $\mathbf{Z}^{(\tau)}, \pi^{(\tau)}, \theta^{(\tau)}$.}
 \item { At simulation step $\tau + 1$, the Gibbs sampler continues as follows:
 

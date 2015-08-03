@@ -96,7 +96,7 @@
 \newboolean{timesfonts}
 
 %% Choose the monochrome crest for the front page (if crests used)
-\shieldtype{0}
+\shieldtype{4}
 
 %%
 %%  --- Options ---

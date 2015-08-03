@@ -66,7 +66,7 @@ For the case of mixture models, the expected complete data log likelihood is:
 \end{equation}
 where, $\gamma(z_{ik}) \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1})$ is the responsibility that component k takes for explaining the observation $x_{i}$, and $\mathbbm{1}(z_{i}=k)$ is an indicator function, equal to 1 if $z_{i}=k$, and 0 otherwise.
 
-\subsubsection{E-Step}
+\subsubsection{E-step}
 The E-step can be computed using the following form for any mixture model, which is the responsibility that component k takes for explaining the observation $x_{i}$:
 \begin{equation} \label{responsibilities-f-mm}
   \begin{aligned}
@@ -76,7 +76,7 @@ The E-step can be computed using the following form for any mixture model, which
   \end{aligned}
 \end{equation}
 
-\subsubsection{M-Step}
+\subsubsection{M-step}
 In the M-step we optimize $Q$ with respect to parameters $\Theta = (\theta_{1},...,\theta_{K},\pi_{1},...,\pi_{K})$.
 
 For the mixing proportions $\pi_{k}$, we take the derivative of \emph{Eq. \ref{log-lik-expected-derivation-f-mm}} w.r.t. $\pi_{k}$ and set it to zero; due to the constraint that $\sum_{k=1}^{K}\pi_{k} = 1$ we introduce a Lagrange multiplier. Thus we have:

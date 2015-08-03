@@ -1,4 +1,4 @@
-\subsection{Generating Synthetic Datasets} \label{integr-synth-data-sect}
+\subsection{Generating synthetic datasets} \label{integr-synth-data-sect}
 As it is aforementioned, the mixture model is a \emph{generative model}, thus, it gives us information for generating data. To generate data $X_{mn}$, we start with the parameters that are in the highest levels of the graphical model, since they are independent. Then, we move down in lower levels and generate samples conditioning on the values of their \emph{parents}, \ie the parameters that are in the higher levels. 
 
 For our synthetic dataset, we assume that we have $M=3$ one-dimensional data sources, and each data source consists of $N=1000$ objects, \ie $\mathbb{X}_{m} : 1 \times 1000$. Each data source has a different observation model, that is we have:

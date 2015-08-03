@@ -1,4 +1,4 @@
-\section{Clustering DNA methylation profiles} \label{cluster-meth-s}
+\section{Clustering DNA Methylation Profiles} \label{cluster-meth-s}
 After defining a model for the DNA methylation profiles, a statistical method needs to be proposed in order to perform model-based clustering of methylation profiles. 
 
 A mixture model approach \citep{McLachlan1988} is chosen to cluster methylation profiles, and the model is fitted to the data using maximum likelihood. Thus, \emph{EM algorithm} \citep{Dempster1977} is chosen to estimate the mixture model parameters. Below we derive the \emph{E} and \emph{M} steps for clustering methylation profiles using the \emph{Binomial distributed Probit regression function} as the observation model. 
@@ -15,7 +15,7 @@ For example, for a $2^{nd}$ degree polynomial, we can rewrite \emph{Eq. \ref{lik
 \end{equation}
 where $\theta = (\alpha, \beta, c)$.
 
-\subsection{E-Step}
+\subsection{E-step}
 In the E-step we compute the responsibility that component k takes on explaining observations $\mathbf{y}_{i}$, and by substituting the proposed likelihood function to \emph{Eq. \ref{responsibilities-f-mm}}, we have:
 \begin{equation} \label{responsibilities-binom-prob-model-f-meth}
   \begin{split}
@@ -26,7 +26,7 @@ In the E-step we compute the responsibility that component k takes on explaining
 \end{equation}
 Thus, the E-step essentially remains the same, with the difference that at each iteration we need to evaluate pointwise a different observation model. 
 
-\subsection{M-Step}
+\subsection{M-step}
 In the M-step, we need to optimize \emph{Eq. \ref{log-lik-expected-derivation-f-mm}} with respect to $\pi_{k}$ and $\theta_{k}$. The update for the mixing proportions $\pi_{k}$ for each M-step remains the same as the simple mixture model, that is:
 \begin{equation} \label{mixing-proportions-binom-prob-est-f-meth}
 		\pi_{k} = \frac{1}{N} \sum_{i} \gamma(z_{ik})

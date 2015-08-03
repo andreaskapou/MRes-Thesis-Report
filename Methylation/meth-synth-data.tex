@@ -1,7 +1,7 @@
-\subsection{Generating Synthetic Datasets} \label{meth-synth-data-subsect}
+\subsection{Generating synthetic datasets} \label{meth-synth-data-subsect}
 To evaluate the performance of the proposed method for clustering DNA methylation profiles a synthetic dataset is generated. 
 
-The dataset consists of $N=400$ regions, where each region $i$ is 200bp (base pairs) long. Intuitively, location 0 may denote the Transcription Start Site (TSS), and we take 100 base pairs (\ie locations) \emph{upstream} and 100 base pairs \emph{downstream} of the TSS, resulting in 200bp in total. Each region $i$, may have different number of total cytosines $L_{i}$, which is randomly generated from a \emph{Binomial} distribution:
+The dataset consists of $N=400$ regions, where each region $i$ is 200bp (base pairs) long. Intuitively, location 0 may denote the Transcription Start Site (TSS), and we take 100bp (\ie locations) \emph{upstream} and 100bp \emph{downstream} of the TSS, resulting in 200bp in total. Each region $i$, may have different number of total cytosines $L_{i}$, which is randomly generated from a \emph{Binomial} distribution:
 \begin{equation}
 	L_{i} \sim \mathcal{B}inom(r=25, p=0.9)
 \end{equation}
@@ -30,33 +30,33 @@ Finally, the observations $\mathbf{y}_{i}$ for each region $i$ are generated as 
 
 \emph{Fig. \ref{meth-prof-pic}} depicts six regions randomly selected from the synthetic dataset. Each plot represents the observations $\mathbf{y}_{i}$ for region i, and each data point represents the methylation level of the CpG in the specific location.
 
-If someone imagines of fitting a latent function through the data points, plots (a), (b) and (c) would have similar methylation profiles, since they start with high methylation level which gradually decreases to no methylation downstream of TSS. These regions are generated from cluster $Z_{i}=1$. Plots (d) and (e) have similar methylation profiles, but very different from the other plots. These regions are generated from cluster $Z_{i}=2$. Finally, plot (f) has a distinct methylation profile with high methylation level around TSS (\ie location 0) and low methylation everywhere else and is generated from cluster $Z_{i}=3$. For clarity, data points in each plot are coloured according to the cluster that generated them.
+If someone imagines of fitting a latent function through the data points, plots (a), (b) and (c) would have similar methylation profiles, since they start with high methylation level which gradually decreases to no methylation downstream of TSS. These regions are generated from cluster $Z_{i}=1$. Plots (d) and (e) have similar methylation profiles, but very different from the other plots. These regions are generated from cluster $Z_{i}=2$. Finally, plot (f) has a distinct methylation profile with high methylation level around TSS (\ie location 0) and low methylation everywhere else and is generated from cluster $Z_{i}=3$. For clarity, each plot is coloured according to the cluster that generated it.
  
 \begin{figure}[ht!]
      \begin{center}
         \subfigure[]{
             \label{fig:first1}
-            \includegraphics[width=0.3\textwidth]{images/prof1}
+            \includegraphics[width=0.31\textwidth]{images/prof1}
         }
         \subfigure[]{
            \label{fig:second1}
-           \includegraphics[width=0.3\textwidth]{images/prof2}
+           \includegraphics[width=0.31\textwidth]{images/prof2}
         }
         \subfigure[]{
             \label{fig:third1}
-            \includegraphics[width=0.3\textwidth]{images/prof3}
+            \includegraphics[width=0.31\textwidth]{images/prof3}
         } %  ------- End of the first row ----------------------%
         \subfigure[]{
             \label{fig:fourth1}
-            \includegraphics[width=0.3\textwidth]{images/prof4}
+            \includegraphics[width=0.31\textwidth]{images/prof4}
         }
         \subfigure[]{
             \label{fig:fifth1}
-            \includegraphics[width=0.3\textwidth]{images/prof5}
+            \includegraphics[width=0.31\textwidth]{images/prof5}
         }
         \subfigure[]{
             \label{fig:sixth1}
-            \includegraphics[width=0.3\textwidth]{images/prof6}
+            \includegraphics[width=0.31\textwidth]{images/prof6}
         }
     \end{center}
     \caption{\emph{Six different methylation profiles randomly chosen from the synthetic data. Each plot is coloured according to the cluster that generated it. See the text for details.}}

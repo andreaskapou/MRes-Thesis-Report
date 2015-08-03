@@ -1,6 +1,6 @@
 \chapter{Appendix 1} \label{appendix1-ch}
 
-\section{Partial Derivatives for M-Step} \label{derivatives-m-step-s}
+\section{Partial derivatives for M-step} \label{derivatives-m-step-s}
 
 We need to compute the partial derivatives w.r.t. parameters $\theta_{k}$ of the following quantity:
 \begin{equation} \label{parameters-est2-EM-f-app}
@@ -28,7 +28,7 @@ In a similar fashion we can derive the partial derivatives $\frac{\partial \ell(
 
 
 
-\section{Posterior distribution for Poisson Log-Linear Mixture Model}
+\section{Posterior distribution for Poisson log-linear mixture model}
 
 The likelihood for the Poisson log-linear mixture model is given by:
 \begin{equation} \label{poisson-log-lin-mm-app}
@@ -64,8 +64,8 @@ Using the Bayes Rule, we can compute the posterior distribution for the paramete
   		& \propto p(\mathbf{x}| \lambda_{jk}) \times p(\lambda_{jk}) \\
   		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})\bigg)^{\mathbb{I}(z_{i}=k)} \times \mathcal{G}(\lambda_{jk}|\alpha, \beta) \\
   		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \frac{1}{x_{ijl}!} e^{-(w_{i}s_{jl}\lambda_{jk})} (w_{i}s_{jl}\lambda_{jk})^{x_{ijl}}\bigg)^{\mathbb{I}(z_{i}=k)} \times \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
-		& \propto \prod_{i} \bigg(\prod_{l} e^{-(w_{i}s_{jl}\lambda_{jk})} \lambda_{jk}^{x_{ijl}} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)}\bigg)^{\mathbb{I}(z_{i}=k)} \\
-		& = \prod_{i} \bigg(\prod_{l} \lambda_{jk}^{(x_{ijl} + a -1)} e^{-\lambda_{jk}(w_{i}s_{jl} + \beta)}\bigg)^{\mathbb{I}(z_{i}=k)} \\
+  		& \propto \prod_{i} \bigg( \prod_{l} \lambda_{jk}^{x_{ijl}} e^{-(w_{i}s_{jl}\lambda_{jk})}\bigg)^{\mathbb{I}(z_{i}=k)} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
+  		& = \lambda_{jk}^{\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl}\big)} e^{-\lambda_{jk}\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl}\big)} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
 		& = \lambda_{jk}^{\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl} + a -1\big)} e^{-\lambda_{jk}\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl} + \beta \big)}
   \end{split}
 \end{equation}

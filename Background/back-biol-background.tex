@@ -11,7 +11,7 @@ The \emph{central dogma} of molecular biology explains the flow of genetic infor
 
 As a general rule, each cell of an organism carries the same genetic information, that is, each cell contains the exact same DNA sequence in its nucleus \citep{Jasny2001}. Yet, the human organism contains more than $200$ different cell types, which have different form and functionality. Thus, the question that arises is, what is the molecular basis for the morphological difference between cell types, \eg human blood cells and brain cells? 
 
-The answer is that each cell expresses only specific genes (\ie makes mRNA transcripts from specific genes) that are needed for its proper function. For example, blood cells need to produce hemoglobin proteins which are needed to carry oxygen from the lungs to the tissues. On the other hand, brain cells do not need to express these specific genes for synthesizing hemoglobin proteins, but they need to express genes that synthesize proteins that are needed for specific functions of the brain.
+The answer is that each cell expresses only specific genes (\ie makes mRNA transcripts from specific genes) that are needed for its proper function. For example, cells of the retina in the eye need to produce the light-sensitive proteins, such as rhodopsin, that permit us to see \citep{Jasny2001}. On the other hand, brain cells do not need to express these specific genes for synthesizing rhodopsin proteins, but they need to express genes that synthesize proteins that are needed for specific functions of the brain.
 
 The ability of each cell to orchestrate the synthesis of proteins by using only a specific set of genes from the \emph{genome} (\ie the whole set of genes), is termed as \emph{regulation of gene expression} \citep{Jasny2001}.
 
@@ -21,8 +21,16 @@ Recent advances in \emph{epigenomics} have suggested some other mechanisms that 
 
 Histones are proteins that act as a spool where DNA can be wrapped around them to form \emph{nucleosomes}. The combination of DNA and nucleosomes within the nucleus of eukaryotic cells is called the \emph{chromatin}. 
 
-DNA methylation is an epigenetic mark which occurs when a methyl group is attached to the \emph{cytosine} DNA nucleotides. In mammals, DNA methylation is observed almost exclusively on cytosines in the context of CpG dinucleotides. Genome wide CpGs are depleted, but mainly near promoter regions there are clusters of CpGs, which are called CpG islands (CGIs) \citep{Bird2002}. 
+DNA methylation is an epigenetic mark which occurs when a methyl group is attached to the \emph{cytosine} DNA nucleotides. In mammals, DNA methylation is observed almost exclusively on cytosines in the context of CpG dinucleotides. Genome wide CpGs are depleted, but mainly near promoter regions there are clusters of CpGs, which are called CpG islands (CGIs) \citep{Bird2002,Illingworth2009}. 
+
+\begin{figure}[!ht]
+\begin{center}
+ \includegraphics[scale = 0.3]{images/epigenetics}
+\caption{\emph{Epigenetic mechanisms involved in regulation of gene expression. Cytosine residues within DNA can be methylated (Me). Histones, which make up the nucleosome, may also be modified and affect transcription regulation \citep{Horsager2014}.}}
+\label{epigenetics-pic}
+\end{center}
+\end{figure}
 
 %Owing to the rapid development of Next Generation Sequencing (NGS) technology, it is reasonable to expect genome sequences and other forms of high-throughput data to be measured extensively. For example, \emph{RNA-Seq} experiments \citep{Wang2009} are widely used for transcriptome profiling, i.e. measuring the set of all RNA molecules produced in a given cell or cell population (at a given time). \emph{Chip-Seq} experiments \citep{Park2009} are used to quantitatively measure and analyse protein interactions with DNA, i.e. HMs and binding of TFs. Whole-Genome Bisulphite Sequencing (WGBS) \citep{Frommer1992}, and Reduced Representation Bisulphite Sequencing (RRBS) \citep{Meissner2008}, are methods that use bisulphite treatment of DNA and allow estimation of methylation level at a single-nucleotide resolution. 
 
-Recent research studies, assisted by whole-genome data analysis, demonstrated that gene expression and histone modifications (HMs) are well correlated, since a probabilistic model was created, which given a small number of HMs could predict gene expression \citep{Karlic2010}. Also, \citet{Benveniste2014}, using the richness of the ENCODE datasets \citep{Dunham2012}, learned a logistic regression classifier with the TFs as input features and showed that only from knowledge of TF binding patterns at promoters they could accurately predict HMs. These are only some studies that show the correlation between genetic and epigenetic mechanisms. 
+Nevertheless, the relative role of each regulatory mechanism is hotly debated. Recent research studies, assisted by whole-genome data analysis, demonstrated that gene expression and histone modifications (HMs) are well correlated, since a probabilistic model was created, which given a small number of HMs could predict gene expression \citep{Karlic2010}. Also, \citet{Benveniste2014}, using the richness of the ENCODE datasets \citep{Dunham2012}, learned a logistic regression classifier with the TFs as input features and showed that only from knowledge of TF binding patterns at promoters they could accurately predict HMs. These are only some studies that show the correlation between genetic and epigenetic mechanisms. 

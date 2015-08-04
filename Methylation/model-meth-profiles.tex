@@ -1,5 +1,5 @@
 \section{Modelling DNA Methylation Profiles} \label{model-meth-profiles-s}
-DNA methylation data generated from NGS technology can be modelled with a Binomial distribution. Assume that \emph{t} is the total number of reads that are mapped to a specific CpG site, and that the 5-Methylcytosine were found in \emph{m} of these reads. Then for each CpG site we have the read proportion \emph{(m,t)}, and we assume that:
+The measurement process of DNA methylation can be modelled with a Binomial distribution. Assume that \emph{t} is the total number of reads that are mapped to a specific CpG site, and that the 5-Methylcytosine were found in \emph{m} of these reads. Then for each CpG site we have the read proportion \emph{(m,t)}, and we assume that:
 \begin{equation} \label{binom-1d-f-meth}
 	m \sim Binom(t, p)
 \end{equation}
@@ -12,7 +12,7 @@ We are interested in modelling methylation profiles across different genomic reg
 \end{equation}
 where, $m_{il}$ is the number of 5-Methylcytosine reads on $l$-th CpG site in region $i$, and $t_{il}$ is the total number of reads on $l$-th CpG site in region $i$. 
 
-Hence, we can formulate our problem as a \emph{regression} problem, where we try to fit a function $\mathbf{f}$, of some specific form, to the observations $\mathbf{y}$. A promising approach for modelling the methylation profile for a given region is to use a \emph{Gaussian Process} for classification \citep{Rasmussen2006}. Even though this approach would be ideal, its time complexity of $O(n^{3})$ is prohibitive for our purposes. Thus, we have to resort to modelling the methylation profiles using $n^{th}$ degree polynomial functions.
+Hence, we can formulate our problem as a \emph{regression} problem, where we try to fit a function $\mathbf{f}$, of some specific form, to the observations $\mathbf{y}$. A promising approach for modelling the methylation profile for a given region is to use a \emph{Gaussian Process} for classification \citep{Rasmussen2006}. Even though this approach would be ideal, its time complexity of $O(n^{3})$ is prohibitive for our purposes. A computationally more attractive approach would be to follow a parametric approach by selecting an explicit set of basis functions.
 
 More specifically, let $\mathbf{x}_{i}$ be the genomic region of interest, $\mathbf{y}_{i}$ be the vector of observations in this region (\ie proportions of methylated reads to the total reads at each site), and let $f(\mathbf{x}_{i})$ be a latent function representing the methylation profile at that specific genomic region. Since the observed methylation data are actually the fraction of total reads that contained methylated cytosines, each entry in the region will take values in the $[0, 1]$ interval, thus, we introduce a latent function $g(\mathbf{x}_{i})$, \eg $g(\mathbf{x}_{i}) = \alpha \mathbf{x}_{i}^{2} + \beta \mathbf{x}_{i} + c$, defined as the \emph{inverse probit transformation} of $f(\mathbf{x}_{i})$. In other words, $f(\mathbf{x}_{i})$ is the probit transformation of $g(\mathbf{x}_{i})$:
 \begin{equation} \label{probit-transform-f-meth}

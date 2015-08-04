@@ -1,5 +1,5 @@
 \subsection{Approximate Bayesian inference} \label{approx-bayes-infer-subsect}
-Even though Bayesian framework is appealing, it is limited by practical difficulties since we need to marginalize over the whole parameter space in order to compute the posterior. In most cases marginalization is computationally difficult since the integral might be intractable and difficult to approximate. To be able to compute some of the Bayesian integrals analytically, \emph{conjugate priors} should be used if possible. For a given functional form of the likelihood $p(\mathbf{X}|\Theta)$, the prior $p(\Theta)$ is said to be conjugate for that likelihood, if the posterior $p(\Theta|\mathbf{X})$ has the same functional form as the prior.
+Even though Bayesian framework is appealing, it is limited by practical difficulties since we need to marginalize over the whole parameter space in order to compute the posterior. In most cases marginalization is computationally difficult since the integral might be intractable and difficult to approximate. To be able to compute some of the Bayesian integrals analytically, \emph{conjugate priors} should be used if possible. For a given functional form of the likelihood $p(\mathbf{X}|\Theta)$, the prior distribution $p(\Theta)$ is said to be conjugate for that likelihood, if the posterior distribution $p(\Theta|\mathbf{X})$ has the same functional form as the prior distribution.
 
 When the posterior is intractable to compute, we need to resort to approximation schemes, and these fall broadly into two main classes. Deterministic approximation schemes, such as \emph{Variational Bayes} \citep{Beal2003} or \emph{Expectation Propagation} \citep{Minka1999}, are based on selecting an approximation $q(\Theta|\mathbf{X})$ from some tractable family, \eg Gaussian, and then trying to make this approximation as similar as possible to the true posterior distribution $p(\Theta|\mathbf{X})$, using a cost function such as KL-divergence \cite[Ch. 21]{Murphy2012}. Thus, Variational Bayes can be seen as an extension of the \emph{Expectation Maximization} (EM) algorithm for full Bayesian parameter estimation, since it constructs a lower bound on the marginal likelihood, and attempts to optimise this bound using an iterative scheme \citep{Beal2003}.
 
@@ -14,7 +14,7 @@ In most cases though, drawing samples from the probability distribution $p(\Thet
 
 For the MCMC to converge to the target distribution of interest, some properties of the Markov Chain should hold, such as \emph{ergodicity}, \emph{irreducibility}, and \emph{recurrence}. These notions will not be explained in this work, since the algorithms that will be used are almost always theoretically convergent; but the interested reader can find a detailed explanation of these notions in \citet{Robert1999} and \citet{Liu2001}
 
-There are two main MCMC algorithms that are extensively used for Bayesian inference, \emph{Metropolis-Hastings} (MH) algorithm \citep{Metropolis1953, Hastings1970}, and \emph{Gibbs sampling} \citep{Geman1984, Gelfand1990}. 
+There are two main MCMC algorithms that are extensively used for Bayesian inference, \emph{Metropolis-Hastings} (MH) algorithm \citep{Metropolis1953, Hastings1970}, and \emph{Gibbs sampling} algorithm \citep{Geman1984, Gelfand1990}. 
 
 \subsubsection*{Metropolis-Hastings algorithm}
 MH generates a Markov Chain, where at each simulation step it proposes to move from a current state $\Theta^{(\tau)}$ to a new state $\Theta^{(*)}$ with probability $q(\Theta^{(*)}|\Theta^{(\tau)})$, where $q$ is called the \emph{proposal} or \emph{jump} distribution. If the proposal is accepted the algorithm moves to the new state $\Theta^{(*)}$, otherwise the new state remains the same as the current state, $\Theta^{(\tau)}$. The acceptance probability of the proposal is given by the following formula:
@@ -26,7 +26,7 @@ MH generates a Markov Chain, where at each simulation step it proposes to move f
 \end{equation}
 \vspace*{0.1mm}
 
-An important thing to note, is that evaluation of the acceptance criterion $\alpha$, does only require knowledge of the target distribution $p(\Theta)$ up to a normalization constant. For example, suppose $p(\Theta) = \widetilde{p}(\Theta)/Z$, where $\widetilde{p}(\Theta)$ is the unnormalized quantity and $Z$ is the normalization constant. Then, \emph{Eq. \ref{MH-f-bayes}} becomes:
+An important thing to mention, is that evaluation of the acceptance criterion $\alpha$, does only require knowledge of the target distribution $p(\Theta)$ up to a normalization constant. For example, suppose $p(\Theta) = \widetilde{p}(\Theta)/Z$, where $\widetilde{p}(\Theta)$ is the unnormalized quantity and $Z$ is the normalization constant. Then, \emph{Eq. \ref{MH-f-bayes}} becomes:
 \begin{equation} \label{MH-un-f-bayes}
   \begin{aligned}
 	\alpha & = min\bigg(1, \frac{\big(\widetilde{p}(\Theta^{(*)})/Z\big)q\big(\Theta^{(\tau)} | \Theta^{(*)}\big)}{\big(\widetilde{p}(\Theta^{(\tau)})/Z\big) q\big(\Theta^{(*)}|\Theta^{(\tau)}\big)}\bigg) \\
@@ -48,4 +48,4 @@ For example, suppose that we have a distribution of three variables $p(\Theta|\m
 \end{equation}
 \vspace*{1mm}
 
-In real applications, we may have conditional independence between random variables, and by representing the distribution as a graphical model we can infer the dependencies of the variables by looking at the \emph{Markov blanket} of each variable, which are its neighbours in the graph \cite[Ch. 8]{Bishop2006}. 
+In real applications, we may have conditional independence between random variables, and by representing the distribution as a \emph{probabilistic graphical model} we can infer the dependencies of the variables by looking at the \emph{Markov blanket} of each variable, which are its neighbours in the graph. The interested reader should consult  \citet[Ch. 8]{Bishop2006} and \citet{Petrucelli1974} for an in depth introduction to probabilistic graphical models.

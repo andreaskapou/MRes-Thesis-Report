@@ -35,7 +35,7 @@ Given the values of the latent function $\mathbf{f}_{i}$, the observations at ea
   \end{split}
 \end{equation}
 
-From its final form, we refer to this function as the \emph{Binomial distributed Probit regression function}. In practice, the likelihood is computed in the log space, due to numerical issues when multiplying many probabilities of small numbers leading to underflow errors. Thus, the joint log likelihood for region \emph{i} is:
+From its final form, we refer to the observation model as the \emph{Binomial distributed Probit regression function}. In practice, the likelihood is computed in the log space, due to numerical issues when multiplying many probabilities of small numbers leading to underflow errors. Thus, the joint log likelihood for region \emph{i} is:
 \begin{equation} \label{likel-binom-prob-log-f-meth}
   \begin{split}
 	\log p(\mathbf{y}_{i}|\mathbf{f}_{i}) & = \sum_{l=1}^{L} \log p(y_{il}|f_{il}) \\

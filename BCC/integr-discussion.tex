@@ -1,1 +1,14 @@
 \section{Discussion} \label{integr-discussion-sect}
+In this chapter we considered the problem of performing integrative clustering on multisource data, and more specifically on data that are produced from NGS technology.
+
+BCC model, proposed by \citet{Lock2013}, is a flexible clustering method that simultaneously integrates information from different data and also captures the underlying structural similarities across data sources. As it was shown, BCC can be thought as a flexible bridge between the extremes of separate and joint clusterings, since it introduces a parameter for controlling the adherence of each data source to the overall clustering. Also, by performing an integrative statistical modelling of both the source-specific and overall clusterings simultaneously, makes the method more powerful and allows for uncertainty in all parameters.
+
+The main contribution of this project was to extend the BCC model to be applicable to NGS genomics data. A \emph{Binomial} observation model was introduced for clustering DNA methylation data generated from RRBS experiments, and a \emph{Poisson} observation model for clustering gene expression data generated from RNA-Seq experiments. 
+
+The analysis that we conducted on the synthetic data, confirm the the statistical power of the method on estimating the parameters with high accuracy. 
+
+
+
+%It assumes that there is a simple dependence between the data sources BCC model is useful in problems where we seek an overall clustering between data sources assumes that there is a 
+%By performing source-specific and overall clustering simultaneously in the same model in a statistical way, permits 
+%The statistical modelling of both the source-specific and overall clusterings in the same framework allows to get uncertainty in all parameters,   

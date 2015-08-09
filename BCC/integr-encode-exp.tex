@@ -1,1 +1,22 @@
 \section{Encode Experiments} \label{integr-encode-exper-sect}
+To evaluate the performance of the BCC model, we will use the same ENCODE datasets that were described in \emph{Section \ref{encode-data-sect}}, that is, the RRBS and RNA-Seq data produced from K562 and H1-hESC cell lines. Also, the procedure for preprocessing the data and defining promoter regions is exactly the same as described in \emph{Section \ref{meth-encode-experiments-sect}}. 
+
+To perform integrative clustering we have to define the different data sources $m$ and the observation models $f_{m}(X_{mn}|\theta_{m})$ that each data source follows. We have two data sources, RNA-Seq and RRBS, for a common set of N objects, where as objects we define the different protein-coding genes.
+
+RNA-Seq experiments return count based measure of gene expression and a natural choice to statistically model these data is a \emph{Poisson} observation model. Thus, we assume that each object from the RNA-Seq data source is generated from a Poisson mixture distribution:
+\begin{equation}
+	X_{mn} \mid L_{mn} = k, \theta_{mk} \sim \mathcal{P}ois\big(\lambda_{mk}\big)
+\end{equation}
+
+The measurement process of DNA methylation from RRBS experiments can be modelled with a Binomial distribution, that is, each CpG site follows a Binomial distribution. Since, our objects are protein-coding genes, it does not make sense to model each CpG site, but rather we should consider promoter regions and model the methylation level of these regions. A promising approach for this problem would be to model each methylation profile using the \emph{Binomial distributed Probit regression} function introduced in \emph{Chapter \ref{model-meth-chapter}}. Even though this model is promising, it cannot be integrated in the BCC model in a straightforward way, as it is  explained in \emph{Section \ref{future-work-sect}}.
+
+Hence, in order to integrate the RRBS data in the BCC model, we take a crude approach by summing the methylation level of all the CpGs in each promoter region. Assuming \emph{independence} of the methylation level between CpG sites, the sum of independent Binomial random variables will also follow a Binomial distribution. Thus, we assume that each object from the RRBS data source is generated from a Binomial mixture distribution:
+\begin{equation}
+	X_{mn} \mid L_{mn} = k, \theta_{mk} \sim \mathcal{B}inom\big(t_{mk}, \rho_{mk}\big)
+\end{equation}
+
+The independence assumption is a strong assumption, since the the methylation level of a CpG site is highly correlated with the methylation level of the surrounding CpGs (i.e. spatial co-dependence). Also, by summing the methylation level of the CpGs in each region and representing each promoter with a single methylation value, important features of the data are discarded. For example, methylation profiles with low methylation upstream of TSS and high methylation downstream of TSS, would have similar methylation value with their reverse pattern, that is, methylation profiles with high methylation upstream of TSS and low methylation downstream of TSS. These issues, need to be understood and taken into consideration when analysing the results of the BCC model.
+
+
+
+Even though this model is promising there is a practical issue when trying to integrate it with the BCC model. As it was introduced, the model parameters (\ie the coefficients of the latent basis functions) are estimated using Maximum Likelihood, which means that we seek the value of the parameters that maximizes the likelihood. On the other hand, the BCC model takes a Bayesian approach, which computed a posterior distribution over the model parameters. 

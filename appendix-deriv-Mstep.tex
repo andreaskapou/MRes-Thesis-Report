@@ -1,0 +1,23 @@
+\chapter{Partial derivatives for M-step} \label{derivatives-m-step-chapter}
+We need to compute the partial derivatives w.r.t. parameters $\theta_{k}$ of the following quantity:
+\begin{equation} \label{parameters-est2-EM-f-app}
+  \begin{split}
+	\ell(\theta_{k}) & \triangleq \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(\mathbf{y}_{i}|\mathbf{f}_{i}, \theta_{k}) \\
+					 & = \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \log \bigg(Binom \big(t_{il}, \Phi(g_{il}; \theta_{k})\big) \bigg) \\
+					 & \propto  \sum_{i} \sum_{k} \gamma(z_{ik}) \sum_{l} \bigg(m_{il} \log \Phi(g_{il}; \theta_{k}) + \big(t_{il} - m_{il} \big) \log \big(1 - \Phi(g_{il}; \theta_{k})\big)\bigg)
+  \end{split}
+\end{equation}
+where $\theta_{k} = (\alpha, \beta, c)$ in the example of $2^{nd}$ degree polynomial, i.e. $g_{il} = \alpha x^{2} + \beta x + c$. To not clutter notation, let $\Phi(g_{il}) = \Phi(g_{il}; \theta_{k})$. Thus, for the partial derivatives w.r.t. $\alpha$ parameter we have the following derivation:
+
+\begin{equation} \label{derivative-a-f-app}
+  \begin{split}
+	\frac{\partial \ell(\theta_{k})}{\partial \alpha} & = \sum_{i} \gamma(z_{ik}) \sum_{l} \bigg[ m \frac{\partial}{\partial \alpha}\big(\log \Phi(g_{il})\big) + (t-m) \frac{\partial}{\partial \alpha}\big(\log \big[1 - \Phi(g_{il})\big]\big)\bigg] \\
+		& = \sum_{i} \gamma(z_{ik}) \sum_{l} \bigg[ \frac{m}{\Phi(g_{il})} \frac{\partial \Phi(g_{il})}{\partial g_{il}} \frac{\partial g_{il}}{\partial \alpha} + \frac{t - m}{1 - \Phi(g_{il})}\bigg( -\frac{\partial \Phi(g_{il})}{\partial g_{il}} \frac{\partial g_{il}}{\partial \alpha} \bigg) \bigg] \\
+		& = \sum_{i} \gamma(z_{ik}) \sum_{l} \bigg[ \frac{m}{\Phi(g_{il})} x_{il}^{2} \mathbf{\phi}(g_{il}) - \frac{t - m}{1 - \Phi(g_{il})} x_{il}^{2} \mathbf{\phi}(g_{il}) \bigg]\\
+		& = \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il}^{2} \mathbf{\phi}(g_{il})\bigg(\frac{m}{\Phi(g_{il})} - \frac{t - m}{1 - \Phi(g_{il})}\bigg) \bigg] \\
+		& = \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il}^{2} \mathbf{\phi}(g_{il})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il})}{\Phi(g_{il})\big(1-\Phi(g_{il})\big)} \bigg) \bigg]
+	\end{split}
+\end{equation}
+where $\mathbf{\phi}(g_{il}) \triangleq \mathbf{\phi}(g_{il};\theta_{k})$ is the \emph{probability density function (pdf)} for the standard normal distribution $\mathcal{N}(0,1)$.
+
+In a similar fashion we can derive the partial derivatives $\frac{\partial \ell(\theta_{k})}{\partial \beta}$ and $\frac{\partial \ell(\theta_{k})}{\partial c}$.

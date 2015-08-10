@@ -1,0 +1,52 @@
+\chapter{Poisson mixture model for NGS data}
+A different parametrization of the Poisson mixture model that accounts for the specific characteristics of the RNA-Seq data was proposed by \citet{Rau2013}. The model is fitted to the data using MLE and the EM algorithm is used to estimate the mixture model parameters. To integrate this model in the BCC model, we need to perform parameter estimation in a fully Bayesian approach and compute the posterior distribution over the parameters. Gibbs sampling algorithm will be used for inference, thus we need to derive the update equations for the mean parameter of the Poisson mixture model.
+
+Let $\mathbf{x}=x_{ijl}$ be the gene expression data for object (\ie gene) $i \;(i = 1,...,N)$ of condition $j \; (j=1,...,D)$ in biological replicate $l \; (l=1,...,r_{j})$. To cluster together co-expressed genes a Poisson mixture model is used. This model is parametrized to account for specific characteristics of RNA-Seq data, including:
+(1) an offset parameter $w_{i}$ which corresponds to the overall expression level of observation $i$, \ie $w_{i} = \sum\limits_{j}\sum\limits_{l} x_{ijl}$, (2) a normalization factor $s_{jl}$ to account for different library sizes and (3) an unknown parameter $\lambda_{jk}$ which corresponds to the proportion of reads attributed to condition $j$ in cluster $k$. The $w_{i}$ and $s_{jl}$ are estimated from the data prior to fitting the model, and thus are considered to be fixed.
+
+Assuming the samples are conditionally independent given the cluster components, the likelihood for the Poisson mixture model is given by:
+\begin{equation} \label{poisson-log-lin-mm-app}
+  \begin{split}
+	\ell(\mathbf{\lambda}) \triangleq p(\mathbf{x} | \mathbf{\lambda}) & = \sum\limits_{z} p(\mathbf{z}) p(\mathbf{x} | \mathbf{\lambda}, \mathbf{z})\\
+		& = \prod_{i} \sum_{k} p(z_{i} = k) \prod_{j} \prod_{l} \mathcal{P}(x_{ijl} | \mu_{ijlk}) \\
+		& = \prod_{i} \sum_{k} \pi_{k} \prod_{j} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})
+  \end{split}
+\end{equation}
+where $\mathcal{P}(\cdot)$ denotes the Poisson probability mass function, $w_{i}$ and $s_{jl}$ are considered to be fixed constants learned from the data, and $\mathbf{z}$ are discrete \emph{latent variables} representing from which cluster each object was generated. 
+
+For a specific condition $j$ in cluster $k$, the likelihood function simplifies to:
+\begin{equation} \label{poisson-log-lin-mm-jk-app}
+  \begin{split}
+	\ell(\lambda_{jk}) & \triangleq \prod_{i} \bigg( \pi_{k} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})\bigg)^{\mathbb{I}(z_{i}=k)}
+  \end{split}
+\end{equation}
+
+In the Bayesian framework we need to define prior distributions on the parameters and if possible \emph{conjugate priors}. For the parameter of the Poisson probability mass function a natural choice is to use a Gamma prior:
+\begin{equation} \label{poisson-prior-mm-app}
+  \begin{split}
+  \lambda_{jk} & \sim \mathcal{G}(\alpha, \beta) \\
+  	& = \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)}
+    \end{split}
+\end{equation}
+where $\mathcal{G}(\alpha, \beta)$ denotes the Gamma probability distribution with \emph{shape} parameter $\alpha$ and \emph{rate} parameter $\beta$, and $\Gamma(\alpha)$ is the \emph{Gamma} function evaluated at $\alpha$.
+
+Using Bayes' theorem, we can compute the posterior distribution for the parameter $\lambda_{jk}$ as follows:
+
+\begin{equation} \label{posterior-poisson-bayes-rule-app}
+  \begin{split}
+  	p(\lambda_{jk} | \mathbf{x}) & = \frac{p(\mathbf{x}| \lambda_{jk}) \times p(\lambda_{jk})}{p(\mathbf{x})} \\
+  		& \propto p(\mathbf{x}| \lambda_{jk}) \times p(\lambda_{jk}) \\
+  		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})\bigg)^{\mathbb{I}(z_{i}=k)} \times \mathcal{G}(\lambda_{jk}|\alpha, \beta) \\
+  		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \frac{1}{x_{ijl}!} e^{-(w_{i}s_{jl}\lambda_{jk})} (w_{i}s_{jl}\lambda_{jk})^{x_{ijl}}\bigg)^{\mathbb{I}(z_{i}=k)} \times \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
+  		& \propto \prod_{i} \bigg( \prod_{l} \lambda_{jk}^{x_{ijl}} e^{-(w_{i}s_{jl}\lambda_{jk})}\bigg)^{\mathbb{I}(z_{i}=k)} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
+  		& = \lambda_{jk}^{\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl}\big)} e^{-\lambda_{jk}\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl}\big)} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
+		& = \lambda_{jk}^{\big(a - 1 + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl}\big)} e^{-\lambda_{jk}\big(\beta + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl} \big)}
+  \end{split}
+\end{equation}
+
+This quantity is an unnormalized Gamma distribution, so the posterior is in the same family distribution as the prior and can be written as follows:
+\begin{equation} \label{posterior-poisson-final-app}
+  	p(\lambda_{jk} | \mathbf{x}) = \mathcal{G}\bigg(a + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl}, b + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl} \bigg)
+\end{equation}
+ 
+

@@ -46,7 +46,7 @@ Direct maximization of this quantity w.r.t the parameters $\theta_{k}$ is not fe
 \begin{equation} \label{gradient-f}
 	\nabla\ell = \bigg( \frac{\partial \ell(\theta_{k})}{\partial \alpha}, \frac{\partial \ell(\theta_{k})}{\partial \beta}, \frac{\partial \ell(\theta_{k})}{\partial c}\bigg) 
 \end{equation}
-where the partial derivatives are given in the equations below (see \emph{Appendix \ref{derivatives-m-step-s}} for the whole derivations):
+where the partial derivatives are given in the equations below (see \emph{Appendix \ref{derivatives-m-step-chapter}} for the whole derivations):
 \begin{equation} \label{derivative-a-f}
 	\frac{\partial \ell(\theta_{k})}{\partial \alpha} =  \sum_{i}  \gamma(z_{ik}) \sum_{l} \bigg[ x_{il}^{2} \mathbf{\phi}(g_{il};\theta_{k})\bigg(\frac{m_{il} - t_{il}\Phi(g_{il};\theta_{k})}{\Phi(g_{il};\theta_{k})\big(1-\Phi(g_{il};\theta_{k})\big)} \bigg) \bigg]
 \end{equation}

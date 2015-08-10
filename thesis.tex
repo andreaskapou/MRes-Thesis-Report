@@ -44,7 +44,7 @@
 %% Taught MSc -- specify a particular degree instead. If none is specified,
 %% "MSc in Informatics" is used.
  %%\documentclass[mscres,ianc,draft,logo]{infthesis}
- \documentclass[mscres,ianc,abbrevs,logo]{infthesis}
+ \documentclass[mscres,ianc,abbrevs, logo]{infthesis}
 % \documentclass[msc]{infthesis}  % for the MSc in Informatics
 
 %% Master of Informatics (5 year degree)
@@ -126,8 +126,8 @@ Undoubtedly I would like to thank my family for the incomparable understanding a
 This thesis was carried out at the School of Informatics at the University of Edinburgh and was funded by the Engineering and Physical Sciences Research Council (EPSRC).
 
 %This dissertation is dedicated to the memory of the late former dean and professor George Karabatzos.
-
 \end{acknowledgements}
+
 
 %% Next we need to have the declaration.
 \standarddeclaration
@@ -156,13 +156,16 @@ This thesis was carried out at the School of Informatics at the University of Ed
 \include{BCC/integrative-clustering}
 \include{Conclusion/conclusion}
 
-
 %%%%%%%%
 %% Any appendices should go here. The appendix files should look just like the
 %% chapter files.
 \appendix
-\include{appendix1}
+\include{appendix-deriv-Mstep}
+\include{appendix-PoisMix-NGS}
 
+%%\newpage
+%%\thispagestyle{empty}
+%%\mbox{}
 %% Choose your favourite bibliography style here.
 \bibliographystyle{apalike}
 

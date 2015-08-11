@@ -1,4 +1,4 @@
-\chapter{Poisson mixture model for NGS data}
+\chapter{Poisson mixture model for NGS data} \label{app-poisson}
 A different parametrization of the Poisson mixture model that accounts for the specific characteristics of the RNA-Seq data was proposed by \citet{Rau2013}. The model is fitted to the data using MLE and the EM algorithm is used to estimate the mixture model parameters. To integrate this model in the BCC model, we need to perform parameter estimation in a fully Bayesian approach and compute the posterior distribution over the parameters. Gibbs sampling algorithm will be used for inference, thus we need to derive the update equations for the mean parameter of the Poisson mixture model.
 
 Let $\mathbf{x}=x_{ijl}$ be the gene expression data for object (\ie gene) $i \;(i = 1,...,N)$ of condition $j \; (j=1,...,D)$ in biological replicate $l \; (l=1,...,r_{j})$. To cluster together co-expressed genes a Poisson mixture model is used. This model is parametrized to account for specific characteristics of RNA-Seq data, including:

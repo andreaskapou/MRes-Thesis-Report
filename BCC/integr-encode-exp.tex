@@ -16,7 +16,3 @@ Hence, in order to integrate the RRBS data in the BCC model, we take a crude app
 \end{equation}
 
 The independence assumption is a strong assumption, since the the methylation level of a CpG site is highly correlated with the methylation level of the surrounding CpGs (i.e. spatial co-dependence). Also, by summing the methylation level of the CpGs in each region and representing each promoter with a single methylation value, important features of the data are discarded. For example, methylation profiles with low methylation upstream of TSS and high methylation downstream of TSS, would have similar methylation value with their reverse pattern, that is, methylation profiles with high methylation upstream of TSS and low methylation downstream of TSS. These issues, need to be understood and taken into consideration when analysing the results of the BCC model.
-
-
-
-Even though this model is promising there is a practical issue when trying to integrate it with the BCC model. As it was introduced, the model parameters (\ie the coefficients of the latent basis functions) are estimated using Maximum Likelihood, which means that we seek the value of the parameters that maximizes the likelihood. On the other hand, the BCC model takes a Bayesian approach, which computed a posterior distribution over the model parameters. 

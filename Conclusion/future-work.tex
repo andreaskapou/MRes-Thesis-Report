@@ -5,7 +5,7 @@ The choice of the ENCODE datasets probably was not optimal for performing data a
 
 Recently, we established a collaboration with Dr. Peter Adams' lab at the Beatson Institute for Cancer Research \citep{Adams2015}. The Adams' lab is interested in investigating the impact of the chromatin structure and epigenomics on cell ageing and cancer. We expect to extend these models and propose more elaborate methods in the near future to analyse the data that will be generated from these experiments, and will help to gain a better insight on the impact of epigenomics on cancer and ageing.     
 
-\subsection{Mixture modelling of methylation profiles in BCC model}
+\subsection{Mixture modelling of methylation profiles in BCC model} \label{conc-meth-prof-bcc-subsect}
 In \emph{Chapter \ref{model-meth-chapter}} a novel method was proposed to model and cluster methylation profiles using the \emph{Binomial distributed Probit regression} function. Experimental evaluation on synthetic and real datasets confirmed the statistical power of the model to capture important features of the data. Even though this model is promising in clustering methylation profiles there are practical difficulties in integrating it inside Bayesian Consensus Clustering. 
 
 The model is fitted to the data using a maximum likelihood approach and the Generalised EM algorithm is used to estimate the model parameters (\ie the coefficients of the latent basis functions). To integrate this model in the BCC model we need to adopt a fully Bayesian approach and compute the posterior distribution over the parameters, instead of only maximizing the likelihood function.

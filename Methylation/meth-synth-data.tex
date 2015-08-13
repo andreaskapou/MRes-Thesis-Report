@@ -7,13 +7,13 @@ The dataset consists of $N=400$ regions, where each region $i$ is 200bp (base pa
 \end{equation}
 where $r$ is the total number of trials and $p$ is the probability of success.
 
-Since the location of each cytosine is crucial in order to interpret the methylation profiles, these are sampled from a \emph{Uniform} distribution:
+Since the location of each cytosine, relative to the TSS, is crucial in order to interpret the methylation profiles, these are sampled from a \emph{Uniform} distribution:
 \begin{equation}
 	loc_{i} \sim \mathcal{U}niform(n=L_{i}, min=-100, max=100)
 \end{equation}
 that is, we sample $L_{i}$ locations uniformly from (-100, 100). 
 
-We assume that there are K=3 different methylation profiles and the clustering assignments $\mathbf{Z}$ are divided in $Z_{i}=1$ for $i \in \lbrace 1,...,200 \rbrace$, $Z_{i}=2$ for $i \in \lbrace 201,...,320 \rbrace$ and, $Z_{i}=3$ for $i \in \lbrace 321,...,400 \rbrace$. 
+We assume K=3 different methylation profiles and the clustering assignments $\mathbf{Z}$ are divided in $Z_{i}=1$ for $i \in \lbrace 1,...,200 \rbrace$, $Z_{i}=2$ for $i \in \lbrace 201,...,320 \rbrace$ and, $Z_{i}=3$ for $i \in \lbrace 321,...,400 \rbrace$. 
 
 Finally, the observations $\mathbf{y}_{i}$ for each region $i$ are generated as follows:
 \begin{itemize}
@@ -28,10 +28,7 @@ Finally, the observations $\mathbf{y}_{i}$ for each region $i$ are generated as 
 	}
 \end{itemize}
 
-\emph{Fig. \ref{meth-prof-pic}} depicts six regions randomly selected from the synthetic dataset. Each plot represents the observations $\mathbf{y}_{i}$ for region i, and each data point represents the methylation level of the CpG in the specific location.
-
-If someone imagines of fitting a latent function through the data points, plots (a), (b) and (c) would have similar methylation profiles, since they start with high methylation level which gradually decreases to no methylation downstream of TSS. These regions are generated from cluster $Z_{i}=1$. Plots (d) and (e) have similar methylation profiles, but very different from the other plots. These regions are generated from cluster $Z_{i}=2$. Finally, plot (f) has a distinct methylation profile with high methylation level around TSS (\ie location 0) and low methylation everywhere else and is generated from cluster $Z_{i}=3$. For clarity, each plot is coloured according to the cluster that generated it.
- 
+\emph{Fig. \ref{meth-prof-pic}} depicts six regions randomly selected from the synthetic dataset. Each plot represents the observations $\mathbf{y}_{i}$ for region i, and each data point represents the methylation level of the CpG in that specific location. If someone imagines of fitting a latent function through the data points, plots (a), (b) and (c) would have similar methylation profiles, since they start with high methylation level which gradually decreases to no methylation downstream of TSS. These regions are generated from cluster $Z_{i}=1$. Plots (d) and (e) have similar methylation profiles, but very different from the other plots. These regions are generated from cluster $Z_{i}=2$. Finally, plot (f) has a distinct methylation profile with high methylation level around TSS (\ie location 0) and low methylation everywhere else and is generated from cluster $Z_{i}=3$. For clarity, each plot is coloured according to the cluster that generated it.
 \begin{figure}[ht!]
      \begin{center}
         \subfigure[]{
@@ -63,7 +60,7 @@ If someone imagines of fitting a latent function through the data points, plots 
    \label{meth-prof-pic}
 \end{figure}
 
-It should be noted that region locations are scaled to [-1,1] interval from the [-100, 100] interval. This is mainly done for practical reasons, so as to get small values for the coefficients of the polynomials when running the EM algorithm. Location scaling was done using the following formula:
+It should be noted that region locations are scaled to the [-1,1] interval from the [-100, 100] interval. This is mainly done for practical reasons in order to get small values for the coefficients of the polynomials when running the EM algorithm. Location scaling was applied using the following formula:
 \begin{equation}
 	x_{l,scaled} = \frac{x_{l} - x_{min}}{x_{max} - x_{min}} * (max - min) + min
 \end{equation}

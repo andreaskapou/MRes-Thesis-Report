@@ -12,12 +12,12 @@ The other approximation scheme, and the one that is used extensively in this wor
 
 In most cases though, drawing samples from the probability distribution $p(\Theta)$ might be infeasible, \eg we might not be able to compute the normalisation constant. To overcome this problem a powerful framework called \emph{Markov Chain Monte Carlo} (MCMC) is extensively used \citep{Neal1998}. The main idea is that MCMC simulates draws (\ie Monte Carlo) that are slightly dependent (\ie Markov Chain), and these draws are approximately from the probability distribution of interest, i.e. the \emph{stationary distribution} of the Markov Chain is the target distribution $p(\Theta)$. Then, we can use these draws to evaluate \emph{Eq. \ref{mc-f-bayes}}.
 
-For the MCMC to converge to the target distribution of interest, some properties of the Markov Chain should hold, such as \emph{ergodicity}, \emph{irreducibility}, and \emph{recurrence}. These notions will not be explained in this work, since the algorithms that will be used are almost always theoretically convergent; but the interested reader can find a detailed explanation of these notions in \citet{Robert1999} and \citet{Liu2001}
+For the MCMC to converge to the target distribution of interest, some properties of the Markov Chain should hold, such as \emph{ergodicity}, \emph{irreducibility}, and \emph{recurrence}. These notions will not be explained in this work, since the algorithms that will be used are almost always theoretically convergent; but the interested reader can find a detailed explanation of these notions in \citet{Robert1999} and \citet{Liu2001}.
 
 There are two main MCMC algorithms that are extensively used for Bayesian inference, \emph{Metropolis-Hastings} (MH) algorithm \citep{Metropolis1953, Hastings1970}, and \emph{Gibbs sampling} algorithm \citep{Geman1984, Gelfand1990}. 
 
 \subsubsection*{Metropolis-Hastings algorithm}
-MH generates a Markov Chain, where at each simulation step it proposes to move from a current state $\Theta^{(\tau)}$ to a new state $\Theta^{(*)}$ with probability $q(\Theta^{(*)}|\Theta^{(\tau)})$, where $q$ is called the \emph{proposal} or \emph{jump} distribution. If the proposal is accepted the algorithm moves to the new state $\Theta^{(*)}$, otherwise the new state remains the same as the current state, $\Theta^{(\tau)}$. The acceptance probability of the proposal is given by the following formula:
+MH generates a Markov Chain, where at each simulation step it proposes to move from a current state $\Theta^{(\tau)}$ to a new state $\Theta^{(*)}$ with probability $q(\Theta^{(*)}|\Theta^{(\tau)})$, where $q$ is called the \emph{proposal} or \emph{jump} distribution. If the proposal is accepted the algorithm moves to the new state $\Theta^{(*)}$, otherwise the new state remains the same as the current state $\Theta^{(\tau)}$. The acceptance probability of the proposal is given by the following formula:
 
 \begin{equation} \label{MH-f-bayes}
   \begin{aligned}
@@ -35,9 +35,9 @@ An important thing to mention, is that evaluation of the acceptance criterion $\
 \end{equation}
 
 \subsubsection*{Gibbs sampling algorithm}
-Gibbs sampling can be seen as a special case of MH where the acceptance rate of each proposal is equal to one. The basic idea of Gibbs sampling is that on each simulation step we sample each parameter in turn, conditioned on the values of all the remaining parameters in the distribution and the known information. This is called the \emph{full conditional} distribution, and the idea is that sampling from the full conditional will be feasible, in contrast to sampling from the \emph{full joint} distribution.
+Gibbs sampling can be seen as a special case of MH where the acceptance rate of each proposal is equal to one. The basic idea of Gibbs sampling is that on each simulation step we sample each parameter in turn, conditioned on the values of all the remaining parameters in the distribution and the known information. This is called the \emph{full conditional} distribution, and the idea is that sampling from the full conditional should be feasible, in contrast to sampling from the \emph{full joint} distribution.
 
-For example, suppose that we have a distribution of three variables $p(\Theta|\mathbf{X}) = p(\theta_{1}, \theta_{2}, \theta_{3}|\mathbf{X})$ that we want to sample from, where $\Theta$ is the set of all variables and $\mathbf{X}$ is the known information. Suppose that at simulation step $\tau$ we have sampled values $\theta_{1}^{(\tau)}, \theta_{2}^{(\tau)}, \theta_{3}^{(\tau)}$. At the next simulation step, the Gibbs sampler continues as follows:
+For example, suppose that we have a distribution of three parameters $p(\Theta|\mathbf{X}) = p(\theta_{1}, \theta_{2}, \theta_{3}|\mathbf{X})$ that we want to sample from, where $\Theta$ is the set of all parameters and $\mathbf{X}$ is the known information. Suppose that at simulation step $\tau$ we have sampled values $\theta_{1}^{(\tau)}, \theta_{2}^{(\tau)}, \theta_{3}^{(\tau)}$. At the next simulation step, the Gibbs sampler continues as follows:
 
 \begin{equation} \label{gibbs-f-bayes}
   \begin{aligned}

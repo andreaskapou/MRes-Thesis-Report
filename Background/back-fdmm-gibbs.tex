@@ -18,7 +18,7 @@ To perform inference in the Bayesian framework, the posterior distribution of th
 \end{equation}
 where we use the fact that $\mathbf{X}$ is conditionally independent of $\pi$ given $\mathbf{Z}$, \ie $\mathbf{X} \bigCI \pi \mid \mathbf{Z}$.
 
-This posterior is intractable to compute, thus we need to resort to an approximation scheme. The method that will be used, and the one that is extensively used for inference in mixture models, is Gibbs sampling \citep{Geman1984}. Deriving Gibbs sampling for this model requires deriving an expression for the full conditional distribution of every random variable. Since conjugate priors are used over the parameters, we can write analytically the full conditional distributions, and also we can easily draw samples from them.
+This posterior is intractable to compute, thus we need to resort to an approximation scheme. The method that will be used, and the one that is extensively used for inference in mixture models, is Gibbs sampling \citep{Geman1984}. Deriving Gibbs sampling for this model, requires deriving an expression for the full conditional distribution of every random variable. Since conjugate priors are used over the parameters, we can write analytically the full conditional distributions, and also we can easily draw samples from them.
 
 By looking at the graphical model, and using the \emph{Markov blanket} for finding conditional independence between the variables, we obtain the following full conditional distributions:
 \begin{equation}%\scriptstyle
@@ -31,13 +31,13 @@ By looking at the graphical model, and using the \emph{Markov blanket} for findi
 
 \noindent\textbf{Gibbs sampling algorithm}: 
 \begin{itemize}
-\item {Initially at simulation step 0, parameter values $\mathbf{Z}^{(0)}$, $\pi^{(0)}$, and $\theta^{(0)}$ are chosen arbitrarily.}
+\item {Initially, at simulation step 0, parameter values $\mathbf{Z}^{(0)}$, $\pi^{(0)}$, and $\theta^{(0)}$ are chosen arbitrarily.}
 \item {Suppose at simulation step $\tau$ we have sampled values $\mathbf{Z}^{(\tau)}, \pi^{(\tau)}, \theta^{(\tau)}$.}
 \item { At simulation step $\tau + 1$, the Gibbs sampler continues as follows:
 
 \begin{equation*}%\scriptstyle
   \begin{aligned}
-    \text{Generate} \; \; z_{i}^{(\tau+1)} \; & \propto \; \pi_{k}^{(\tau)}p(x_{i}|\theta_{k}^{(\tau)}) \; for \; k=1,...K \\
+    \text{Generate} \; \; z_{i}^{(\tau+1)} \; & \propto \; \pi_{k}^{(\tau)}p(x_{i}|\theta_{k}^{(\tau)}) \; \text{for} \; k=1,...K \\
     \text{Generate} \; \; \pi_{k}^{(\tau+1)} \; & \sim \; \mathcal{D}ir\big(\delta + \sum_{i=1}^{N}\mathbbm{1}(z_{i}^{(\tau+1)}=k)\big) \\
     \text{Generate} \; \; \theta_{k}^{(\tau+1)} \; & \sim \; \mathcal{G}_{0}(\theta_{k}| \mathbf{X}, \mathbf{Z}^{(\tau+1)}=k; \mathcal{H})
   \end{aligned}
@@ -45,4 +45,4 @@ By looking at the graphical model, and using the \emph{Markov blanket} for findi
 }
 \end{itemize}
 
-The choice for the prior distribution $\mathcal{G}_{0}(\cdot| \cdot; \mathcal{H})$ for the parameters $\theta$ depends on the observation model $p(\mathbf{X}|\theta)$. For example, if the observation model is a \emph{Poisson} distribution, \ie $\mathbf{X} \sim \mathcal{P}ois(\lambda)$ where $\lambda$ is the mean and variance parameter, then an appropriate conjugate prior would be a \emph{Gamma} distribution, \ie $\lambda \sim \mathcal{G}amma(\alpha, \beta)$ where $\alpha$ and $\beta$ are its hyper-parameters.
+The choice for the prior distribution $\mathcal{G}_{0}(\cdot| \cdot; \mathcal{H})$ of the parameters $\theta$ depends on the observation model $p(\mathbf{X}|\theta)$. For example, if the observation model is a \emph{Poisson} distribution, \ie $\mathbf{X} \sim \mathcal{P}ois(\lambda)$ where $\lambda$ is the mean and variance parameter, then an appropriate conjugate prior would be a \emph{Gamma} distribution, \ie $\lambda \sim \mathcal{G}amma(\alpha, \beta)$ where $\alpha$ and $\beta$ are its hyper-parameters.

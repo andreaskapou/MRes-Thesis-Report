@@ -1,0 +1,20 @@
+\subsection{Data Processing}
+The procedure for preprocessing the raw experimental data and defining promoter regions is exactly the same as described in \emph{Section \ref{meth-encode-experiments-sect}}. 
+
+To perform integrative clustering we have to define the data sources $\mathbb{X}_{m}$ and the observation models $f_{m}(X_{mn}|\theta_{m})$ that each data source follows. 
+For our experiments we have two data sources: (1) RNA-Seq for measuring gene expression (GE) and (2) RRBS for measuring CpG methylation (ME). Each source is available for a common set of N objects, where each object is a protein-coding gene.
+
+RNA-Seq experiments return count based measure of gene expression and a natural choice to statistically model these data is a \emph{Poisson} observation model. Thus, we assume that each object from the RNA-Seq data source is generated from a Poisson mixture distribution:
+\begin{equation}
+	X_{mn} \mid L_{mn} = k, \theta_{mk} \sim \mathcal{P}ois\big(\lambda_{mk}\big)
+\end{equation}
+
+The measurement process of DNA methylation from RRBS experiments can be modelled with a Binomial distribution. Since our objects are protein-coding genes it does not make sense to model each CpG site; rather we should consider promoter regions and model the methylation level of these regions. A promising approach would be to model each methylation profile using the \emph{Binomial distributed Probit regression} model introduced in \emph{Chapter \ref{model-meth-chapter}}. Even though this model is promising, it cannot be directly integrated in the BCC model, as we will explain in \emph{Section \ref{conc-meth-prof-bcc-subsect}}.
+
+Hence, in order to evaluate the RRBS data with the BCC model, we take a crude approach by summing the methylation level of all the CpGs in each promoter region. Assuming \emph{independence} of the methylation level between CpG sites, the sum of independent Binomial random variables will also follow a Binomial distribution. Thus, we assume that each object from the RRBS data source is generated from a Binomial mixture distribution:
+\begin{equation}
+	X_{mn} \mid L_{mn} = k, \theta_{mk} \sim \mathcal{B}inom\big(t_{mk}, \rho_{mk}\big)
+\end{equation}
+where $t_{mk}$ is the sum of total number of reads for each CpG site for a specific region.
+
+The independence assumption is a strong assumption, since the methylation level of a CpG site is highly correlated with the methylation level of the surrounding CpGs (i.e. spatial co-dependence). Also, by summing the methylation level of the CpGs in each region and representing each promoter with a single methylation value, essentially we discard  important features of the data. For example, methylation profiles with low methylation upstream of TSS and high methylation downstream of TSS, would have similar methylation value with their reverse pattern, that is, methylation profiles with high methylation upstream of TSS and low methylation downstream of TSS. These issues, need to be understood and taken into consideration when analysing the results of the BCC model.

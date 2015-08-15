@@ -1,5 +1,10 @@
 \chapter{Conclusion} \label{conclusion-chapter}
+Our aim in conducting this project was to statistically model and cluster biological data generated from high-throughput sequencing technology. Despite the widespread take up of this technology, we believe that there is still a substantial gap of bioinformatics tools needed for performing statistical analysis of the generated data.
 
+The contribution of this project was twofold. Initially, we proposed a novel approach for mixture modelling DNA methylation profiles around promoter regions. By exploiting higher order spatial features of the methylation profiles, such as shape, the model was capable of capturing important features of the data; preliminary results support earlier studies that link methylation profile patterns in promoter regions with gene expression. 
 
-Mayo paper discussion
+The second contribution of this project was to extend the BCC model, which is a flexible approach for performing integrative clustering of multisource data, to account for different observation models that high-throughput datasets follow. In most biological studies, different platforms are used to measure diverse but often related information; hence, performing an integrative analysis is essential for a comprehensive understanding of molecular biology. A notable example is cancer disease, which is known that is related with different biological components, thus, a fully integrative analysis is necessary to combine the predictive power of the different data sources.  
+
+Due to time constraint the project was mostly concentrated on the modelling aspect, leaving the comprehensive evaluation on real datasets for future work. However, preliminary results are promising and we are confident that the proposed methods can be applied as everyday analysis tools for bioinfomaticians who want to perform exploratory analysis on next generation sequencing data.
+
 \input{Conclusion/future-work}

@@ -12,9 +12,9 @@ To illustrate the problem, a different synthetic dataset is used, consisting of 
 \end{center}
 \end{figure}
 
-Estimating quantities of interest, \eg posterior mean, from the marginal distributions of $\rho_{1}$ and $\rho_{2}$ parameters, would lead to nonsensical answers. The approach chosen for solving this problem is \citet{Stephens2000} relabelling algorithm, which tries to permute the hidden labels of the MCMC output in such a way that the marginal posterior of each parameter is, as far as possible, unimodal. The \emph{label.switching} package of \citet{Papastamoulis2015} is used for running \emph{Stephens} algorithm. 
+Estimating quantities of interest, \eg posterior mean, from the marginal distributions of $\rho_{1}$ and $\rho_{2}$ parameters, would lead to nonsensical answers. The approach we took for solving this problem is \citet{Stephens2000} relabelling algorithm, which tries to permute the hidden labels of the MCMC output in such a way that the marginal posterior of each parameter is, as far as possible, unimodal. The \emph{label.switching} package of \citet{Papastamoulis2015} is used for running \emph{Stephens} algorithm. 
 
-The outcome of the algorithm is shown in \emph{Fig. \ref{labelBP-stephens-pic}}. Even though the label switching is not completely vanished, the posterior marginal densities of each parameter has become unimodal, hence we can compute quantities of interest.
+The outcome of the algorithm is shown in \emph{Fig. \ref{labelBP-stephens-pic}}. Even though label switching is not completely vanished, the posterior marginal densities of each parameter have become unimodal, hence we can compute quantities of interest.
 \begin{figure}[!ht]
 \begin{center}
  \includegraphics[scale = 0.39]{images/labelBP-stephens.png}

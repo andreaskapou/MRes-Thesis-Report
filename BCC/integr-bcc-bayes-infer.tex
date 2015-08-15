@@ -4,7 +4,7 @@ The full joint distribution of the BCC model, by looking at the graphical repres
   \begin{aligned}
 	P(\mathbb{X}, \mathbb{L}, \mathbb{C}, \pi , \Theta , \alpha) & = P(\mathbb{X}|\mathbb{L},\Theta) P(\mathbb{L}|\mathbb{C},\alpha) P(\mathbb{C}|\pi) P(\alpha) P(\pi) P(\Theta) \\
 	  & = \bigg[\prod_{n}\bigg(\prod_{m} P(X_{mn}|L_{mn},\theta_{m,L_{mn}}) P(L_{mn}|C_{n},\alpha_{m})\bigg) P(C_{n}|\pi)\bigg] \\
-	  & \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad P(\alpha) P(\pi) \prod_{k} P(\theta_{mk})
+	  & \; \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad P(\alpha) P(\pi) \bigg(\prod_{m}\prod_{k} P(\theta_{mk})\bigg)
   \end{aligned}
 \end{equation}
 where the prior distribution $\mathcal{G}_{0}$ and the hyper-parameters ($\delta, \mathit{a}, \beta, \mathcal{H}$) are omitted for clarity.
@@ -30,7 +30,7 @@ For mathematical convenience, \emph{conjugate priors} should be used over the pa
 
 \noindent\textbf{Gibbs sampling algorithm for BCC}: 
 \begin{itemize}
-\item {Initially at simulation step 0, initial parameter values are chosen arbitrarily.}
+\item {Initially, at simulation step 0, parameter values are chosen arbitrarily.}
 \item {Suppose at simulation step $\tau$ we have sampled values $\mathbb{L}^{(\tau)}, \Theta^{(\tau)}, \alpha^{(\tau)}, \mathbb{C}^{(\tau)}, \pi^{(\tau)}$.}
 \item { At simulation step $\tau + 1$, the Gibbs sampler continues as follows:
 \begin{equation*}%\scriptstyle
@@ -44,6 +44,6 @@ For mathematical convenience, \emph{conjugate priors} should be used over the pa
 	\pi_{k}^{(\tau+1)} \mid \mathbb{C}^{(\tau+1)} & \sim \mathcal{D}ir\big(\delta + \sum_{n}\mathbbm{1}(C_{n}=k)\big)
   \end{aligned}
 \end{equation*}
-where $Q_{mk} = \sum_{n}\mathbbm{1}(L_{mn}=k,C_{n}=k)$, and $\mathbbm{1}(\cdot,\cdot)$ is an indicator function, equal to 1 if the quantities inside the function are satisfied, and 0 otherwise.
+where $Q_{mk} = \sum_{n}\mathbbm{1}(L_{mn}=k,C_{n}=k)$, and $\mathbbm{1}(\cdot,\cdot)$ is the indicator function, equal to 1 if the quantities inside the function are satisfied, and 0 otherwise.
 }
 \end{itemize}

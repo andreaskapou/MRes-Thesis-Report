@@ -1,7 +1,7 @@
 \subsection{Generating synthetic datasets} \label{integr-synth-data-sect}
 As it is aforementioned, the mixture model is a \emph{generative model}, thus, it gives us information for generating data. To generate data $X_{mn}$, we start with the parameters that are in the highest levels of the graphical model, since they are independent. Then, we move down in lower levels and generate samples conditioning on the values of their \emph{parents}, \ie the parameters that are in the higher levels. 
 
-For our synthetic dataset, we assume that we have $M=3$ one-dimensional data sources, and each data source consists of $N=1000$ objects, \ie $\mathbb{X}_{m} : 1 \times 1000$. Each data source has a different observation model, that is we have:
+For our synthetic dataset, we assume that we have $M=3$ one-dimensional data sources, and each data source consists of $N=1000$ objects, \ie $\mathbb{X}_{m} : 1 \times 1000$. Each data source follows a different observation model:
 \begin{equation*}
   \begin{aligned}
   	\mathbb{X}_{1} \; & \sim \; \mathcal{N}(\mu, \tau) \\
@@ -9,7 +9,7 @@ For our synthetic dataset, we assume that we have $M=3$ one-dimensional data sou
   	\mathbb{X}_{3} \; & \sim \; \mathcal{P}ois(\lambda)
   \end{aligned}
 \end{equation*}
-Finally, we assume that there are $K=2$ clusters on each data source, hence, the overall clustering assignments $\mathbb{C}$ are divided in $C_{n}=1$ for $n \in \lbrace 1,...,500 \rbrace$, and $C_{n}=2$ for $n \in \lbrace 501,...,1000 \rbrace$. 
+Finally, we assume that there are $K=2$ clusters on each data source, and the overall clustering assignments $\mathbb{C}$ are divided in $C_{n}=1$ for $n \in \lbrace 1,...,500 \rbrace$, and $C_{n}=2$ for $n \in \lbrace 501,...,1000 \rbrace$. 
 
 The procedure for generating the synthetic datasets proceeds as follows:
 \begin{enumerate}
@@ -20,7 +20,7 @@ The procedure for generating the synthetic datasets proceeds as follows:
 		Generate the source-specific clusterings $L_{mn} \in \lbrace 1,2 \rbrace$ with probabilities $p(L_{mn} = C_{n}) = \alpha$ and $p(L_{mn} \neq C_{n}) = 1 - \alpha$
 	}
 	\item{
-		Generate data $X_{mn}$ as follows:
+		Generate object $X_{mn}$ as follows:
 		\begin{itemize}
 			\item{
 				\textbf{m=1}: If $L_{mn}=1 : X_{mn} \sim \mathcal{N}(1.5, 1)$. If $L_{mn}=2 : X_{mn} \sim \mathcal{N}(-1.5, 1)$
@@ -35,4 +35,4 @@ The procedure for generating the synthetic datasets proceeds as follows:
 	}
 \end{enumerate}
 
-We generated 100 synthetic datasets following the procedure described above, and for each realization the model parameters were estimated using BCC. For the adherence parameter a $\mathcal{TB}(1, 1, \frac{1}{K})$ prior was introduced. All the parameters of the different observation models and the mixing proportions were initialized using \emph{k-means} algorithm \citep{MacQueen1967}. Finally, the total number of MCMC iterations was set to $T=10,000$, and the first $2,000$ iterations were discarded (\ie burn-in period). 
+We generated 100 synthetic datasets following the procedure described above, and for each realization the model parameters were estimated using BCC. For the adherence parameter a $\mathcal{TB}(1, 1, \frac{1}{K})$ prior was introduced. All the parameters of the different observation models and the mixing proportions were initialized using \emph{k-means} algorithm \citep{MacQueen1967}. Finally, the total number of MCMC iterations was set to $T=10,000$, and the first $2,000$ iterations were discarded (\ie \emph{burn-in} period). 

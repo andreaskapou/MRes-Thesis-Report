@@ -37,7 +37,7 @@ Using Bayes' theorem, we can compute the posterior distribution for the paramete
   	p(\lambda_{jk} | \mathbf{x}) & = \frac{p(\mathbf{x}| \lambda_{jk}) \times p(\lambda_{jk})}{p(\mathbf{x})} \\
   		& \propto p(\mathbf{x}| \lambda_{jk}) \times p(\lambda_{jk}) \\
   		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \mathcal{P}(x_{ijl} | w_{i}s_{jl} \lambda_{jk})\bigg)^{\mathbb{I}(z_{i}=k)} \times \mathcal{G}(\lambda_{jk}|\alpha, \beta) \\
-  		& = \prod_{i} \bigg(\pi_{k} \prod_{l} \frac{1}{x_{ijl}!} e^{-(w_{i}s_{jl}\lambda_{jk})} (w_{i}s_{jl}\lambda_{jk})^{x_{ijl}}\bigg)^{\mathbb{I}(z_{i}=k)} \times \frac{\beta^{\alpha}}{\Gamma(\alpha)}\lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
+  		& \propto \prod_{i} \bigg(\pi_{k} \prod_{l} e^{-(w_{i}s_{jl}\lambda_{jk})} (w_{i}s_{jl}\lambda_{jk})^{x_{ijl}}\bigg)^{\mathbb{I}(z_{i}=k)} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
   		& \propto \prod_{i} \bigg( \prod_{l} \lambda_{jk}^{x_{ijl}} e^{-(w_{i}s_{jl}\lambda_{jk})}\bigg)^{\mathbb{I}(z_{i}=k)} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
   		& = \lambda_{jk}^{\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl}\big)} e^{-\lambda_{jk}\big(\sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl}\big)} \times \lambda_{jk}^{(\alpha-1)} e^{-(\lambda_{jk}\beta)} \\
 		& = \lambda_{jk}^{\big(a - 1 + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} x_{ijl}\big)} e^{-\lambda_{jk}\big(\beta + \sum\limits_{i} \mathbb{I}(z_{i}=k) \sum\limits_{l} w_{i}s_{jl} \big)}

@@ -1,5 +1,5 @@
 \section{Discussion} \label{meth-discussion-sect}
-The main contribution of this chapter was to propose a novel approach for modelling and clustering DNA methylation profiles around genomic regions of interest, such as promoters. This approach is important for the biology community, since recent studies have suggested a potentially functional role for methylation profile patterns.
+The main contribution of this chapter is to propose a novel approach for modelling and clustering DNA methylation profiles around genomic regions of interest, such as promoters. This approach is important for the biology community, since recent studies have suggested a potentially functional role for methylation profile patterns.
 
 We model methylation data generated from NGS technology using a parametric approach by selecting an explicit set of latent basis functions. Since each CpG site is modelled with a Binomial distribution and a \emph{probit} transformation of the unconstrained latent functions is used to map them to the [0,1] interval, the observation model is termed as the \emph{Binomial distributed Probit regression} model. Finally, a mixture model approach is chosen to cluster together methylation profiles, and EM algorithm is applied to estimate model parameters. 
 

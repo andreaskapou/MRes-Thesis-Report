@@ -45,34 +45,34 @@ Let us define the \emph{complete data log likelihood} as follows:
 If the variables $z_{i}$ were observed, we assume that this likelihood could be easy to compute. EM gets around this problem by defining the \emph{expected complete data log likelihood} as:
 
 \begin{equation} \label{log-lik-expected-f-mm}
-		Q(\Theta, \Theta^{t-1}) \triangleq \mathbb{E} \big[\ell_{c}(\Theta) | \mathbf{X}, \Theta^{t-1}\big]
+		Q(\Theta, \Theta^{(\tau-1)}) \triangleq \mathbb{E} \big[\ell_{c}(\Theta) | \mathbf{X}, \Theta^{(\tau-1)}\big]
 \end{equation}
-where $t$ is the current iteration. The expectation is taken with respect to the old parameters $\Theta^{t-1}$ and the observed data $\mathbf{X}$. In the \emph{E-step}, we compute the terms inside $Q(\Theta, \Theta^{t-1})$ for which MLE depends on. In the \emph{M-step}, we optimize Q w.r.t $\Theta$:
+where $\tau$ is the current iteration. The expectation is taken with respect to the old parameters $\Theta^{(\tau-1)}$ and the observed data $\mathbf{X}$. In the \emph{E-step}, we compute the terms inside $Q(\Theta, \Theta^{(\tau-1)})$ for which MLE depends on. In the \emph{M-step}, we optimize Q w.r.t $\Theta$:
 \begin{equation} \label{max-log-lik-observed-f-mm}
-	\Theta^{t} = \underset{\Theta}{\operatorname{argmax}} \; Q(\Theta, \Theta^{t-1})
+	\Theta^{(\tau)} = \underset{\Theta}{\operatorname{argmax}} \; Q(\Theta, \Theta^{(\tau-1)})
 \end{equation}
 
 For the case of mixture models, the expected complete data log likelihood is:
 \begin{equation} \label{log-lik-expected-derivation-f-mm}
 	\begin{aligned}
-		Q(\Theta, \Theta^{t-1}) & \triangleq \mathbb{E} \big[\ell_{c}(\Theta) | \mathbf{X}, \Theta^{t-1}\big] \\
+		Q(\Theta, \Theta^{(\tau-1)}) & \triangleq \mathbb{E} \big[\ell_{c}(\Theta) | \mathbf{X}, \Theta^{(\tau-1)}\big] \\
 								& = \mathbb{E} \bigg[ \sum_{i} \log p(x_{i}, z_{i}|\theta) \bigg] \\
 								& = \sum_{i} \mathbb{E} \bigg[ \log \bigg[\prod_{k} \big( \pi_{k}p(x_{i}|\theta_{k})\big)^{\mathbbm{1}(z_{i}=k)} \bigg]\bigg] \\
 								& = \sum_{i} \sum_{k} \mathbb{E} \big[\mathbbm{1}(z_{i}=k)\big] \log \big[\pi_{k}p(x_{i}|\theta_{k})\big] \\
-								& = \sum_{i} \sum_{k} p(z_{i}=k|x_{i},\theta_{k}^{t-1}) \log \big[\pi_{k}p(x_{i}|\theta_{k})\big] \\
+								& = \sum_{i} \sum_{k} p(z_{i}=k|x_{i},\theta_{k}^{(\tau-1)}) \log \big[\pi_{k}p(x_{i}|\theta_{k})\big] \\
 								& = \sum_{i} \sum_{k} \gamma(z_{ik}) \log \big[\pi_{k}p(x_{i}|\theta_{k})\big] \\
 								& = \sum_{i} \sum_{k} \gamma(z_{ik}) \log \pi_{k} + \sum_{i} \sum_{k} \gamma(z_{ik}) \log p(x_{i}|\theta_{k}) \\		
 	\end{aligned}
 \end{equation}
-where, $\gamma(z_{ik}) \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1})$ is the responsibility that component k takes for explaining the observation $x_{i}$, and $\mathbbm{1}(z_{i}=k)$ is the indicator function, equal to 1 if $z_{i}=k$, and 0 otherwise.
+where, $\gamma(z_{ik}) \triangleq p(z_{i}=k|x_{i},\theta_{k}^{(\tau-1)})$ is the responsibility that component k takes for explaining the observation $x_{i}$, and $\mathbbm{1}(z_{i}=k)$ is the indicator function, equal to 1 if $z_{i}=k$, and 0 otherwise.
 
 \subsection*{E-step}
 The E-step can be computed using the following form for any mixture model, which is the responsibility that component k takes for explaining the observation $x_{i}$:
 \begin{equation} \label{responsibilities-f-mm}
   \begin{aligned}
-	\gamma(z_{ik}) & \triangleq p(z_{i}=k|x_{i},\theta_{k}^{t-1}) \\
-				   & = \frac{p(z_{i}=k)p(x_{i}|z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} p(z_{i}=j)p(x_{i}|z_{i}=j,\theta_{j}^{t-1})} \\
-				   & = \frac{\pi_{k}p(x_{i}|z_{i}=k,\theta_{k}^{t-1})}{\sum\limits_{j=1}^{K} \pi_{j}p(x_{i}|z_{i}=j,\theta_{j}^{t-1})}
+	\gamma(z_{ik}) & \triangleq p\big(z_{i}=k|x_{i},\theta_{k}^{(\tau-1)}\big) \\
+				   & = \frac{p(z_{i}=k)p\big(x_{i}|z_{i}=k,\theta_{k}^{(\tau-1)}\big)}{\sum\limits_{j=1}^{K} p(z_{i}=j)p\big(x_{i}|z_{i}=j,\theta_{j}^{(\tau-1)}\big)} \\
+				   & = \frac{\pi_{k}p\big(x_{i}|z_{i}=k,\theta_{k}^{(\tau-1)}\big)}{\sum\limits_{j=1}^{K} \pi_{j}p\big(x_{i}|z_{i}=j,\theta_{j}^{(\tau-1)}\big)}
   \end{aligned}
 \end{equation}
 
@@ -83,7 +83,7 @@ For the mixing proportions $\pi_{k}$, we take the derivative of \emph{Eq. \ref{l
 
 \begin{equation} \label{derivative-mix-prop-f-mm}
   \begin{aligned}
-	\frac{\partial}{\partial \pi_{k}} \bigg[  Q(\Theta, \Theta^{t-1}) + \lambda \big( \sum_{k}\pi_{k} - 1\big) \bigg] & = 0 \\
+	\frac{\partial}{\partial \pi_{k}} \bigg[  Q(\Theta, \Theta^{(\tau-1)}) + \lambda \big( \sum_{k}\pi_{k} - 1\big) \bigg] & = 0 \\
 	\sum_{i} \frac{1}{\pi_{k}} \gamma(z_{ik}) + \lambda & = 0 
   \end{aligned}
 \end{equation}

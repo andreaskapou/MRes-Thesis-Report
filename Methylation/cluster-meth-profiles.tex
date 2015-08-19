@@ -24,7 +24,7 @@ In the E-step, we compute the responsibility that component k takes on explainin
 				   & = \frac{\pi_{k} \prod\limits_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta_{k})\big)} {\sum\limits_{j=1}^{K} \pi_{j} \prod\limits_{l=1}^{L} Binom \big(t_{il}, \Phi(g_{il}; \theta_{j})\big)}
   \end{split}
 \end{equation}
-Thus, the E-step essentially remains the same, with the onlydifference that at each iteration we need to evaluate pointwise a different observation model. 
+Thus, the E-step essentially remains the same, with the only difference that at each iteration we need to evaluate pointwise a different observation model. 
 
 \subsection*{M-step}
 In the M-step, we need to optimize \emph{Eq. \ref{log-lik-expected-derivation-f-mm}} with respect to $\pi_{k}$ and $\theta_{k}$. The update for the mixing proportions $\pi_{k}$ at each M-step remains the same as the simple mixture model, that is:
